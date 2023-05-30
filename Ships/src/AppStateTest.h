@@ -4,6 +4,10 @@
 
 class AppStateTest : public AppState
 {
+public:
+    //DEBUG VARS ONLY
+    static int mPlayerX;
+    static int mPlayerY;
 private:
     static AppStateTest Instance;
 
@@ -15,8 +19,6 @@ public:
     void OnKeyDown(SDL_Event* event);
 
     void OnKeyUp(SDL_Event* Event);
-
-public:
     void Init(SDL_Renderer* Renderer);
 
     void OnActivate(SDL_Renderer* Renderer);
@@ -26,7 +28,5 @@ public:
     void OnLoop();
 
     void OnRender();
-
-public:
     static AppStateTest* GetInstance();
 };

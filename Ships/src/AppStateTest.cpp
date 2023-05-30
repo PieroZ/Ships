@@ -8,6 +8,9 @@
 // The solution is to ensure that all virtual methods that are not pure are defined. Note that a destructor must be defined even if it is declared pure-virtual
 
 AppStateTest AppStateTest::Instance;
+int AppStateTest::mPlayerX = 500;
+int AppStateTest::mPlayerY = 150;
+
 AppStateTest::AppStateTest()
 {
 }
@@ -23,12 +26,22 @@ void AppStateTest::OnKeyDown(SDL_Event* event)
 	{
 		case SDLK_LEFT:
 		{
-			INFO("SDLK_LEFT Key down !");
+			mPlayerX--;
 			break;
 		}
 		case SDLK_RIGHT:
 		{
-			INFO("SDLK_RIGHT Key down !");
+			mPlayerX++;
+			break;
+		}
+		case SDLK_UP:
+		{
+			mPlayerY--;
+			break;
+		}
+		case SDLK_DOWN:
+		{
+			mPlayerY++;
 			break;
 		}
 	}
@@ -59,7 +72,7 @@ void AppStateTest::OnLoop()
 void AppStateTest::OnRender()
 {
 	TextureBank::Get("homm2_testbg")->Render(0, 0, Config::getInstance().getScreenWidth(), Config::getInstance().getScreenHeight());
-	TextureBank::Get("boat")->Render(500, 150);
+	TextureBank::Get("boat")->Render(mPlayerX, mPlayerY);
 }
 
 

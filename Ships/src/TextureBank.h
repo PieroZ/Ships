@@ -26,7 +26,7 @@ public:
 	static void Cleanup();
 
 private:
-	static void AddTexture(SDL_Renderer* Renderer, std::string ID, std::string Filename);
+	static void AddTexture(SDL_Renderer* mRenderer, std::string ID, std::string Filename);
 
 public:
 	static Texture* Get(std::string ID);

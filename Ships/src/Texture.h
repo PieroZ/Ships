@@ -13,14 +13,14 @@ private:
 	int Width = 0;
 	int Height = 0;
 
-	SDL_Renderer* Renderer = NULL;
+	SDL_Renderer* mRenderer = NULL;
 	SDL_Texture* SDLTexture = NULL;
 
 public:
 	Texture();
 	~Texture();
 
-	bool Load(SDL_Renderer* Renderer, std::string Filename);
+	bool Load(SDL_Renderer* mRenderer, std::string Filename);
 
 	void Render(int X, int Y);
 

@@ -13,8 +13,8 @@ bool TextureBank::Init()
 {
 	Cleanup();
 
-	SDL_Renderer* Renderer = App::GetInstance()->GetRenderer();
-	if (!Renderer) return false;
+	SDL_Renderer* mRenderer = App::GetInstance()->GetRenderer();
+	if (!mRenderer) return false;
 
 
 	std::string directoryPath = "res/sprites";
@@ -32,7 +32,7 @@ bool TextureBank::Init()
 				if (fileExtension != ".png") continue;
 
 				//Log("Add Texture : ID = %s : Filename = %s : Ext = %s", ID.c_str(), Filename.c_str(), Ext.c_str());
-				AddTexture(Renderer, ID, fileName);
+				AddTexture(mRenderer, ID, fileName);
 
 
 
@@ -69,12 +69,12 @@ void TextureBank::Cleanup()
 }
 
 //=============================================================================
-void TextureBank::AddTexture(SDL_Renderer* Renderer, std::string ID, std::string Filename)
+void TextureBank::AddTexture(SDL_Renderer* mRenderer, std::string ID, std::string Filename)
 {
 	if (ID == "") return;
 
 	Texture* NewTexture = new Texture();
-	if (NewTexture->Load(Renderer, Filename) == false)
+	if (NewTexture->Load(mRenderer, Filename) == false)
 	{
 		HZ_CORE_ERROR("Unable to Load Texture: %s", ID.c_str());
 		return;

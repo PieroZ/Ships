@@ -8,9 +8,9 @@ private:
 	static App mInstance;
 	bool mRunning = true;
 
-	SDL_Window* Window = NULL;
-	SDL_Renderer* Renderer = NULL;
-	SDL_Surface* PrimarySurface = NULL;
+	SDL_Window* mWindow = nullptr;
+	SDL_Renderer* mRenderer = nullptr;
+	SDL_Surface* mPrimarySurface = nullptr;
 
 	static int mWindowWidth;
 	static int mWindowHeight;
@@ -22,6 +22,7 @@ private:
 
 	// Initialize our SDL game / app
 	bool Init();
+	void LoadWindowSizeFromConfig();
 
 	// Logic loop
 	void Loop();

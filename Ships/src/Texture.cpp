@@ -18,15 +18,15 @@ Texture::~Texture()
 }
 
 //==============================================================================
-bool Texture::Load(SDL_Renderer* Renderer, std::string Filename)
+bool Texture::Load(SDL_Renderer* mRenderer, std::string Filename)
 {
-	if (Renderer == NULL)
+	if (mRenderer == NULL)
 	{
 		HZ_CORE_ERROR("Bad SDL renderer passed");
 		return false;
 	}
 
-	this->Renderer = Renderer;
+	this->mRenderer = mRenderer;
 	this->Filename = Filename;
 
 	SDL_Surface* TempSurface = IMG_Load(Filename.c_str());
@@ -37,7 +37,7 @@ bool Texture::Load(SDL_Renderer* Renderer, std::string Filename)
 	}
 
 	// Convert SDL surface to a texture
-	if ((SDLTexture = SDL_CreateTextureFromSurface(Renderer, TempSurface)) == NULL)
+	if ((SDLTexture = SDL_CreateTextureFromSurface(mRenderer, TempSurface)) == NULL)
 	{
 		HZ_CORE_ERROR("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
@@ -64,7 +64,7 @@ void Texture::Render(int X, int Y, int Width, int Height)
 {
 	SDL_Rect Destination = { X, Y, Width, Height };
 
-	SDL_RenderCopy(Renderer, SDLTexture, NULL, &Destination);
+	SDL_RenderCopy(mRenderer, SDLTexture, NULL, &Destination);
 }
 
 //------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void Texture::Render(int X, int Y, int Width, int Height, int SX, int SY, int SW
 	SDL_Rect Source = { SX, SY, SWidth, SHeight };
 	SDL_Rect Destination = { X, Y, Width, Height };
 
-	SDL_RenderCopy(Renderer, SDLTexture, &Source, &Destination);
+	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
 }
 
 void Texture::Render(int X, int Y, SDL_Color color)
@@ -86,7 +86,7 @@ void Texture::Render(int X, int Y, SDL_Color color)
 
 	SDL_Rect Destination = { X, Y, Width, Height };
 
-	SDL_RenderCopy(Renderer, SDLTexture, NULL, &Destination);
+	SDL_RenderCopy(mRenderer, SDLTexture, NULL, &Destination);
 }
 
 //------------------------------------------------------------------------------

@@ -12,8 +12,7 @@ private:
     ~AppStateTest();
 
 public:
-    // void OnEvent(SDL_Event* Event);
-    void OnKeyDown(SDL_Event* Event);
+    void OnKeyDown(SDL_Event* event);
 
     void OnKeyUp(SDL_Event* Event);
 

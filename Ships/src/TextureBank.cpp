@@ -36,7 +36,7 @@ bool TextureBank::Init()
 
 
 
-				HZ_CORE_INFO("File: {0}  Extension: {1}", fileName, fileExtension);
+				INFO("File: {0}  Extension: {1}", fileName, fileExtension);
 			}
 		}
 	}

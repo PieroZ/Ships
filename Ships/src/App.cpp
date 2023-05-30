@@ -20,10 +20,22 @@ App* App::GetInstance()
 	return &App::mInstance;
 }
 
+//------------------------------------------------------------------------------
+void App::OnKeyDown(SDL_Event* Event)
+{
+
+}
+//------------------------------------------------------------------------------
+void App::OnKeyUp(SDL_Event* Event)
+{
+
+}
 
 //------------------------------------------------------------------------------
 void App::OnEvent(SDL_Event* Event)
 {
+	Event::OnEvent(Event);
+	AppStateManager::OnEvent(Event);
 }
 //------------------------------------------------------------------------------
 void App::LoadWindowSizeFromConfig()

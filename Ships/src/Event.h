@@ -15,7 +15,7 @@ public:
 
     virtual void OnInputBlur();
 
-    virtual void OnKeyDown(SDL_Event* Event); // Changes
+    virtual void OnKeyDown(SDL_Event* Event);
 
     virtual void OnKeyUp(SDL_Event* Event);
 

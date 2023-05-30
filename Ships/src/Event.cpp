@@ -40,7 +40,7 @@ void Event::OnEvent(SDL_Event* Event)
         */
 
     case SDL_KEYDOWN:
-    { // CHANGES
+    {
         OnKeyDown(Event);
         break;
     }
@@ -174,7 +174,7 @@ void Event::OnInputBlur()
     //Pure virtual, do nothing
 }
 
-void Event::OnKeyDown(SDL_Event* Event)
+void Event::OnKeyDown(SDL_Event* sym)
 {
     //Pure virtual, do nothing
 }

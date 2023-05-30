@@ -1,8 +1,9 @@
 #pragma once
 
 #include <SDL.h>
+#include "Event.h"
 
-class App
+class App : public Event
 {
 private:
 	static App mInstance;
@@ -20,12 +21,16 @@ private:
 	// Capture SDL Events
 	void OnEvent(SDL_Event* Event);
 
+	void OnKeyDown(SDL_Event* Event);
+	void OnKeyUp(SDL_Event* Event);
+
 	// Initialize our SDL game / app
 	bool Init();
 	void LoadWindowSizeFromConfig();
 
 	// Logic loop
 	void Loop();
+
 
 	// Render loop (draw)
 	void Render();

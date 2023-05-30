@@ -1,9 +1,12 @@
 #include "App.h"
 #include "Log.h"
+#include "Config.h"
 
 #include "TextureBank.h"
 
 App App::mInstance;
+int App::mWindowWidth = 1024;
+int App::mWindowHeight = 768;
 
 App::App()
 {
@@ -36,12 +39,15 @@ bool App::Init()
 		HZ_CORE_ERROR("Unable to Init hinting: %s", SDL_GetError());
 	}
 
+	mWindowWidth = Config::getInstance().getScreenWidth();
+	mWindowHeight = Config::getInstance().getScreenHeight();
+
 	const char windowName[] = "RaceShips";
 
 	if ((Window = SDL_CreateWindow(
 		windowName,
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		WindowWidth, WindowHeight, SDL_WINDOW_SHOWN)
+		mWindowWidth, mWindowHeight, SDL_WINDOW_SHOWN)
 		) == NULL)
 	{
 		HZ_CORE_ERROR("Unable to create SDL Window: %s", SDL_GetError());
@@ -148,7 +154,7 @@ SDL_Renderer* App::GetRenderer() { return Renderer; }
 
 //==============================================================================
 
-int App::GetWindowWidth() { return WindowWidth; }
-int App::GetWindowHeight() { return WindowHeight; }
+int App::GetWindowWidth() { return mWindowWidth; }
+int App::GetWindowHeight() { return mWindowHeight; }
 
 //==============================================================================

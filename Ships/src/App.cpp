@@ -1,9 +1,11 @@
 #include "App.h"
+#include "Log.h"
 
 App App::Instance;
 
 App::App() 
 {
+	Ships::Log::Init();
 }
 
 
@@ -13,9 +15,12 @@ App* App::GetInstance()
 }
 
 
-#include <stdio.h>
 int App::Execute(int argc, char* argv[])
 {
-	printf("TODO");
+	HZ_CORE_TRACE("TRACE");
+	HZ_CORE_INFO("INFO");
+	HZ_CORE_WARN("WARN");
+	HZ_CORE_ERROR("ERROR");
+	HZ_CORE_CRITICAL("CRITICAL");
 	return 0;
 }

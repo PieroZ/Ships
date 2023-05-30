@@ -36,13 +36,13 @@ bool TextureBank::Init()
 
 
 
-				INFO("File: {0}  Extension: {1}", fileName, fileExtension);
+				LOG_INFO("File: {0}  Extension: {1}", fileName, fileExtension);
 			}
 		}
 	}
 	catch (const std::exception& e)
 	{
-		HZ_CORE_CRITICAL("An exception occurred: {0}", e.what());;
+		LOG_CRITICAL("An exception occurred: {0}", e.what());;
 		return false;
 	}
 
@@ -76,7 +76,7 @@ void TextureBank::AddTexture(SDL_Renderer* mRenderer, std::string ID, std::strin
 	Texture* NewTexture = new Texture();
 	if (NewTexture->Load(mRenderer, Filename) == false)
 	{
-		HZ_CORE_ERROR("Unable to Load Texture: %s", ID.c_str());
+		LOG_ERROR("Unable to Load Texture: %s", ID.c_str());
 		return;
 	}
 

@@ -19,8 +19,8 @@ namespace Ships {
 }
 
 // Core log macros
-#define HZ_CORE_TRACE(...)    ::Ships::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define INFO(...)     ::Ships::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define HZ_CORE_WARN(...)     ::Ships::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define HZ_CORE_ERROR(...)    ::Ships::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define HZ_CORE_CRITICAL(...) ::Ships::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define LOG_TRACE(...)    ::Ships::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define LOG_INFO(...)     ::Ships::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define LOG_WARNING(...)     ::Ships::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define LOG_ERROR(...)    ::Ships::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define LOG_CRITICAL(...) ::Ships::Log::GetCoreLogger()->critical(__VA_ARGS__)

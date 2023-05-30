@@ -1,9 +1,12 @@
+#include <SDL_ttf.h>
+
 #include "App.h"
 #include "Log.h"
 #include "Config.h"
 
 #include "TextureBank.h"
 #include "AppStateManager.h"
+#include "ScreenText.h"
 
 App App::mInstance;
 int App::mWindowWidth = 1024;
@@ -48,13 +51,13 @@ bool App::Init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		HZ_CORE_ERROR("Unable to Init SDL: %s", SDL_GetError());
+		LOG_ERROR("Unable to Init SDL: {0}", SDL_GetError());
 		return false;
 	}
 
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 	{
-		HZ_CORE_ERROR("Unable to Init hinting: %s", SDL_GetError());
+		LOG_ERROR("Unable to Init hinting: {0}", SDL_GetError());
 	}
 
 	LoadWindowSizeFromConfig();
@@ -67,7 +70,7 @@ bool App::Init()
 		mWindowWidth, mWindowHeight, SDL_WINDOW_SHOWN)
 		) == NULL)
 	{
-		HZ_CORE_ERROR("Unable to create SDL Window: %s", SDL_GetError());
+		LOG_ERROR("Unable to create SDL Window: {0}", SDL_GetError());
 		return false;
 	}
 
@@ -75,7 +78,7 @@ bool App::Init()
 
 	if ((mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED)) == NULL)
 	{
-		HZ_CORE_ERROR("Unable to create renderer");
+		LOG_ERROR("Unable to create renderer");
 		return false;
 	}
 
@@ -84,14 +87,27 @@ bool App::Init()
 	// Initialize image loading for PNGs
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
 	{
-		HZ_CORE_ERROR("Unable to init SDL_image: %s", IMG_GetError());
+		LOG_ERROR("Unable to init SDL_image: {0}", IMG_GetError());
 		return false;
 	}
 
 	// Load all of our Textures (see TextureBank class for expected folder)
 	if (TextureBank::Init() == false)
 	{
-		HZ_CORE_ERROR("Unable to init TextureBank");
+		LOG_ERROR("Unable to init TextureBank");
+		return false;
+	}
+
+	//Initialize SDL_ttf
+	if (TTF_Init() == -1)
+	{
+		LOG_ERROR("SDL_ttf could not initialize! SDL_ttf Error: {0}\n", TTF_GetError());
+		return false;
+	}
+
+	if (!ScreenText::GetInstance().Init())
+	{
+		LOG_ERROR("ScreenText could not initialize!");
 		return false;
 	}
 
@@ -135,6 +151,7 @@ void App::Cleanup()
 	}
 
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }
 

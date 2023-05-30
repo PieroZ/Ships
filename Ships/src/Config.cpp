@@ -41,7 +41,7 @@ void Config::loadConfig(const std::string& configFile)
     else
     {
         // Handle file open error
-        HZ_CORE_CRITICAL("Failed to open config file: {0}", configFile);
+        LOG_CRITICAL("Failed to open config file: {0}", configFile);
     }
 }
 

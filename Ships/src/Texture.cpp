@@ -22,7 +22,7 @@ bool Texture::Load(SDL_Renderer* mRenderer, std::string Filename)
 {
 	if (mRenderer == NULL)
 	{
-		HZ_CORE_ERROR("Bad SDL renderer passed");
+		LOG_ERROR("Bad SDL renderer passed");
 		return false;
 	}
 
@@ -32,14 +32,14 @@ bool Texture::Load(SDL_Renderer* mRenderer, std::string Filename)
 	SDL_Surface* TempSurface = IMG_Load(Filename.c_str());
 	if (TempSurface == NULL)
 	{
-		HZ_CORE_ERROR("Unable to load image : %s : %s", Filename.c_str(), IMG_GetError());
+		LOG_ERROR("Unable to load image : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
 	}
 
 	// Convert SDL surface to a texture
 	if ((SDLTexture = SDL_CreateTextureFromSurface(mRenderer, TempSurface)) == NULL)
 	{
-		HZ_CORE_ERROR("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
+		LOG_ERROR("Unable to create SDL Texture : %s : %s", Filename.c_str(), IMG_GetError());
 		return false;
 	}
 

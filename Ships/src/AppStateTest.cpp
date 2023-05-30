@@ -2,6 +2,8 @@
 #include "TextureBank.h"
 #include "Log.h"
 #include "Config.h"
+#include "ScreenText.h"
+
 
 
 
@@ -68,6 +70,8 @@ void AppStateTest::OnRender()
 {
 	TextureBank::Get("homm2_testbg")->Render(0, 0, Config::getInstance().getScreenWidth(), Config::getInstance().getScreenHeight());
 	TextureBank::Get("boat")->Render(mPlayerX, mPlayerY);
+
+	ScreenText::GetInstance().RenderText("Screen text", 200, 200, SDL_Color{ 255, 0, 0 });
 }
 
 

@@ -7,6 +7,12 @@ ScreenText::ScreenText()
 {
 }
 
+ScreenText::~ScreenText()
+{
+    TTF_CloseFont(mFont);
+    mFont = nullptr;
+}
+
 void ScreenText::RenderText(const std::string& text, int x, int y, const SDL_Color& color)
 {
     // Render the text surface

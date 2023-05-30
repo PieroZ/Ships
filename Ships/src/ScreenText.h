@@ -14,6 +14,7 @@ public:
     bool Init();
 private:
     ScreenText();
+    ~ScreenText();
     bool LoadFont();
 
 private:

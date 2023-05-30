@@ -22,34 +22,13 @@ AppStateTest::~AppStateTest()
 
 void AppStateTest::OnKeyDown(SDL_Event* event)
 {
-	switch (event->key.keysym.sym)
-	{
-		case SDLK_LEFT:
-		{
-			mPlayerX--;
-			break;
-		}
-		case SDLK_RIGHT:
-		{
-			mPlayerX++;
-			break;
-		}
-		case SDLK_UP:
-		{
-			mPlayerY--;
-			break;
-		}
-		case SDLK_DOWN:
-		{
-			mPlayerY++;
-			break;
-		}
-	}
+	mKeyboardHandler.HandleKeyboardEvent(event);
 }
 //------------------------------------
 
-void AppStateTest::OnKeyUp(SDL_Event* Event)
+void AppStateTest::OnKeyUp(SDL_Event* event)
 {
+	mKeyboardHandler.HandleKeyboardEvent(event);
 
 }
 
@@ -65,6 +44,22 @@ void AppStateTest::OnDeactivate()
 
 void AppStateTest::OnLoop()
 {
+	if (mKeyboardHandler.IsPressed(SDLK_LEFT))
+	{
+		mPlayerX--;
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_RIGHT))
+	{
+		mPlayerX++;
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_UP))
+	{
+		mPlayerY--;
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_DOWN))
+	{
+		mPlayerY++;
+	}
 }
 
 

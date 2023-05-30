@@ -9,8 +9,6 @@ ScreenText::ScreenText()
 
 ScreenText::~ScreenText()
 {
-    TTF_CloseFont(mFont);
-    mFont = nullptr;
 }
 
 void ScreenText::RenderText(const std::string& text, int x, int y, const SDL_Color& color)
@@ -53,6 +51,12 @@ bool ScreenText::Init()
     return LoadFont();
 }
 
+void ScreenText::Cleanup()
+{
+    TTF_CloseFont(mFont);
+    mFont = nullptr;
+}
+
 bool ScreenText::LoadFont()
 {
     //Loading success flag
@@ -64,6 +68,10 @@ bool ScreenText::LoadFont()
     {
         LOG_CRITICAL("Failed to load lazy font! SDL_ttf Error: {0}", TTF_GetError());
         success = false;
+    }
+    else
+    {
+        LOG_TRACE("arial font initialized!");
     }
 
     return success;

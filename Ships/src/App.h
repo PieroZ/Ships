@@ -15,6 +15,9 @@ private:
 
 	static int mWindowWidth;
 	static int mWindowHeight;
+
+	static const int mTargetWidth = 1920;
+	static const int mTargetHeight = 1080;
 private:
 	App();
 
@@ -48,6 +51,9 @@ public:
 
 	static int GetWindowWidth();
 	static int GetWindowHeight();
+
+	static int GetWindowTargetWidth();
+	static int GetWindowTargetHeight();
 
 };
 

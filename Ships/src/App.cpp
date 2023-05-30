@@ -137,6 +137,7 @@ void App::Render()
 void App::Cleanup()
 {
 	TextureBank::Cleanup();
+	ScreenText::GetInstance().Cleanup();
 
 	if (mRenderer)
 	{
@@ -194,5 +195,7 @@ SDL_Renderer* App::GetRenderer() { return mRenderer; }
 
 int App::GetWindowWidth() { return mWindowWidth; }
 int App::GetWindowHeight() { return mWindowHeight; }
+int App::GetWindowTargetWidth() { return mTargetWidth; }
+int App::GetWindowTargetHeight() { return mTargetHeight; }
 
 //==============================================================================

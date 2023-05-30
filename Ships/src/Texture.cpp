@@ -1,5 +1,6 @@
 //==============================================================================
 #include "Texture.h"
+#include "App.h"
 #include "Log.h"
 
 //==============================================================================
@@ -44,9 +45,9 @@ bool Texture::Load(SDL_Renderer* mRenderer, std::string Filename)
 	}
 
 	// Grab dimensions
-	SDL_QueryTexture(SDLTexture, NULL, NULL, &Width, &Height);
+	SDL_QueryTexture(SDLTexture, NULL, NULL, &mWidth, &mHeight);
 
-	//Log("Texture Dimensions: %s : %d %d", Filename.c_str(), Width, Height);
+	//Log("Texture Dimensions: %s : %d %d", Filename.c_str(), mWidth, mHeight);
 
 	SDL_FreeSurface(TempSurface);
 
@@ -56,22 +57,22 @@ bool Texture::Load(SDL_Renderer* mRenderer, std::string Filename)
 //------------------------------------------------------------------------------
 void Texture::Render(int X, int Y)
 {
-	Render(X, Y, Width, Height);
+	Render(X, Y, mWidth, mHeight);
 }
 
 //------------------------------------------------------------------------------
-void Texture::Render(int X, int Y, int Width, int Height)
+void Texture::Render(int X, int Y, int mWidth, int mHeight)
 {
-	SDL_Rect Destination = { X, Y, Width, Height };
+	SDL_Rect Destination = { X, Y, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, SDLTexture, NULL, &Destination);
 }
 
 //------------------------------------------------------------------------------
-void Texture::Render(int X, int Y, int Width, int Height, int SX, int SY, int SWidth, int SHeight)
+void Texture::Render(int X, int Y, int mWidth, int mHeight, int SX, int SY, int SWidth, int SHeight)
 {
 	SDL_Rect Source = { SX, SY, SWidth, SHeight };
-	SDL_Rect Destination = { X, Y, Width, Height };
+	SDL_Rect Destination = { X, Y, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
 }
@@ -84,13 +85,66 @@ void Texture::Render(int X, int Y, SDL_Color color)
 	// Set the blend mode to preserve alpha channel
 	SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
 
-	SDL_Rect Destination = { X, Y, Width, Height };
+	SDL_Rect Destination = { X, Y, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, SDLTexture, NULL, &Destination);
 }
 
+void Texture::RenderScaled(int x, int y)
+{
+	double widthScale = static_cast<double>(App::GetInstance()->GetWindowWidth()) / static_cast<double>(App::GetInstance()->GetWindowTargetWidth());
+	double heightScale = static_cast<double>(App::GetInstance()->GetWindowHeight()) / static_cast<double>(App::GetInstance()->GetWindowTargetHeight());
+
+	int widthOnScreen = mWidth * widthScale;
+	int heightOnScreen = mHeight * heightScale;
+
+	int spriteX = 0;
+	int spriteY = 0;
+	int spriteWidth = mWidth;
+	int spriteHeight = mHeight;
+
+	SDL_Rect Source = { spriteX, spriteY, spriteWidth, spriteHeight };
+	SDL_Rect Destination = { x, y, widthOnScreen, heightOnScreen };
+
+	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
+}
+
+void Texture::RenderScaled(int x, int y, int normalResolutionWidth, int normalResolutionHeight)
+{
+	double widthScale = static_cast<double>(App::GetInstance()->GetWindowWidth()) / static_cast<double>(App::GetInstance()->GetWindowTargetWidth());
+	double heightScale = static_cast<double>(App::GetInstance()->GetWindowHeight()) / static_cast<double>(App::GetInstance()->GetWindowTargetHeight());
+
+	int widthOnScreen = normalResolutionWidth * widthScale;
+	int heightOnScreen = normalResolutionHeight * heightScale;
+
+	int spriteX = 0;
+	int spriteY = 0;
+	int spriteWidth = mWidth;
+	int spriteHeight = mHeight;
+
+	SDL_Rect Source = { spriteX, spriteY, spriteWidth, spriteHeight };
+	SDL_Rect Destination = { x, y, widthOnScreen, heightOnScreen };
+
+	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
+}
+
+
+void Texture::RenderScaled(int x, int y, int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight)
+{
+	double widthScale = static_cast<double>(App::GetInstance()->GetWindowWidth()) / static_cast<double>(App::GetInstance()->GetWindowTargetWidth());
+	double heightScale = static_cast<double>(App::GetInstance()->GetWindowHeight()) / static_cast<double>(App::GetInstance()->GetWindowTargetHeight());
+
+	int widthOnScreen = normalResolutionWidth * widthScale;
+	int heightOnScreen = normalResolutionHeight * heightScale;
+
+	SDL_Rect Source = { spriteX, spriteY, spriteWidth, spriteHeight };
+	SDL_Rect Destination = { x, y, widthOnScreen, heightOnScreen };
+
+	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
+}
+
 //------------------------------------------------------------------------------
-int Texture::GetWidth() { return Width; }
-int Texture::GetHeight() { return Height; }
+int Texture::GetWidth() { return mWidth; }
+int Texture::GetHeight() { return mHeight; }
 
 //==============================================================================

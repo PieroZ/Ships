@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "Config.h"
 #include "ScreenText.h"
+#include "App.h"
 
 
 
@@ -73,10 +74,12 @@ void AppStateTest::OnLoop()
 
 void AppStateTest::OnRender()
 {
-	TextureBank::Get("homm2_testbg")->Render(0, 0, Config::getInstance().getScreenWidth(), Config::getInstance().getScreenHeight());
-	TextureBank::Get("boat")->Render(mPlayerX, mPlayerY);
+	TextureBank::Get("bg_1920_1080")->RenderScaled(0, 0, App::GetInstance()->GetWindowWidth(), App::GetInstance()->GetWindowHeight(), mPlayerX/2, mPlayerY/2, TextureBank::Get("bg_1920_1080")->GetWidth()/2, TextureBank::Get("bg_1920_1080")->GetHeight()/2);
+	TextureBank::Get("biggerBoat")->RenderScaled(App::GetInstance()->GetWindowWidth()/2, App::GetInstance()->GetWindowHeight()/2);
 
-	ScreenText::GetInstance().RenderText("Screen text", 200, 200, SDL_Color{ 255, 0, 0 });
+	std::string playerPosString = "mPlayerx = " + std::to_string(mPlayerX);
+
+	ScreenText::GetInstance().RenderText(playerPosString, 200, 200, SDL_Color{ 255, 0, 0 });
 }
 
 

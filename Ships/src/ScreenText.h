@@ -12,6 +12,7 @@ public:
 
     void RenderText(const std::string& text, int x, int y, const SDL_Color& color);
     bool Init();
+    void Cleanup();
 private:
     ScreenText();
     ~ScreenText();

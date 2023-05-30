@@ -34,6 +34,11 @@ void AppStateTest::OnKeyUp(SDL_Event* event)
 
 }
 
+void AppStateTest::OnResize(int w, int h)
+{
+	LOG_INFO("Window resized to {0}x{1}",w,h);
+}
+
 
 void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 {

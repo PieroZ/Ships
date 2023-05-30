@@ -19,8 +19,7 @@ void ScreenText::RenderText(const std::string& text, int x, int y, const SDL_Col
     SDL_Surface* surface = TTF_RenderText_Solid(mFont, text.c_str(), color);
     if (surface == nullptr)
     {
-        // Handle the error
-        // ...
+        LOG_WARNING("Unable to render screen text!");
         return;
     }
 

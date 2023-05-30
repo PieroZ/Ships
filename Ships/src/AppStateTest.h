@@ -19,7 +19,9 @@ private:
 
 public:
     void OnKeyDown(SDL_Event* event);
-    void OnKeyUp(SDL_Event* event);
+    void OnKeyUp(SDL_Event* event) override;
+    void OnResize(int w, int h) override;
+
 
     void Init(SDL_Renderer* Renderer);
 

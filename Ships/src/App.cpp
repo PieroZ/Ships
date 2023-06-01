@@ -67,7 +67,8 @@ bool App::Init()
 	if ((mWindow = SDL_CreateWindow(
 		windowName,
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		mWindowWidth, mWindowHeight, (SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE))
+		mWindowWidth, mWindowHeight, (SDL_WINDOW_SHOWN))
+		//mWindowWidth, mWindowHeight, (SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE))
 		) == NULL)
 	{
 		LOG_ERROR("Unable to create SDL Window: {0}", SDL_GetError());

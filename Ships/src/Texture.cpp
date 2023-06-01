@@ -137,8 +137,11 @@ void Texture::RenderScaled(int x, int y, int normalResolutionWidth, int normalRe
 	int widthOnScreen = normalResolutionWidth * widthScale;
 	int heightOnScreen = normalResolutionHeight * heightScale;
 
+	int screenX = x * widthScale;
+	int screenY = y * heightScale;
+
 	SDL_Rect Source = { spriteX, spriteY, spriteWidth, spriteHeight };
-	SDL_Rect Destination = { x, y, widthOnScreen, heightOnScreen };
+	SDL_Rect Destination = { screenX, screenY, widthOnScreen, heightOnScreen };
 
 	SDL_RenderCopy(mRenderer, SDLTexture, &Source, &Destination);
 }

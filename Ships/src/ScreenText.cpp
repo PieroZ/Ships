@@ -1,6 +1,7 @@
 #include "ScreenText.h"
 #include "Log.h"
 #include "App.h"
+#include "Texture.h"
 
 
 ScreenText::ScreenText()
@@ -17,7 +18,7 @@ void ScreenText::RenderText(const std::string& text, int x, int y, const SDL_Col
     SDL_Surface* surface = TTF_RenderText_Solid(mFont, text.c_str(), color);
     if (surface == nullptr)
     {
-        LOG_WARNING("Unable to render screen text!");
+        LOG_WARNING("Unable to create surface for TTF text!");
         return;
     }
 
@@ -45,6 +46,34 @@ void ScreenText::RenderText(const std::string& text, int x, int y, const SDL_Col
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 }
+
+void ScreenText::AddToRenderQueue(const std::string& text, const SDL_Color& color, int x, int y,  int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight, int renderOrder)
+{
+   /* SDL_Texture* SDLtexture = CreateTextTexture(text, color);
+    Texture texture(SDLtexture);
+
+    texture.AddToRenderQueue(x, y, normalResolutionWidth, normalResolutionHeight, 0, 0, texture.GetWidth(), texture.GetHeight(), renderOrder);*/
+}
+
+//SDL_Texture* ScreenText::CreateTextTexture(const std::string& text, const SDL_Color& color)
+//{
+//    // Render the text surface
+//    SDL_Surface* surface = TTF_RenderText_Solid(mFont, text.c_str(), color);
+//    if (surface == nullptr)
+//    {
+//        LOG_WARNING("Unable to create surface for TTF text!");
+//        return;
+//    }
+//
+//    // Create a texture from the surface
+//    SDL_Texture* texture = SDL_CreateTextureFromSurface(App::GetInstance()->GetRenderer(), surface);
+//
+//    SDL_FreeSurface(surface);
+//
+//    return texture;
+//}
+
+
 
 bool ScreenText::Init()
 {

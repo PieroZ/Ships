@@ -1,6 +1,6 @@
 //==============================================================================
 /*
-	Texture Bank class for loading multiple textures
+	Texture Bank class for loading multiple sprites
 
 	3/18/2014
 	SDLTutorials.com

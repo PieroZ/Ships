@@ -7,6 +7,7 @@
 #include "TextureBank.h"
 #include "AppStateManager.h"
 #include "ScreenText.h"
+#include "Fonts.h"
 
 App App::mInstance;
 int App::mWindowWidth = 1024;
@@ -109,6 +110,12 @@ bool App::Init()
 	if (!ScreenText::GetInstance().Init())
 	{
 		LOG_ERROR("ScreenText could not initialize!");
+		return false;
+	}
+
+	if(!Fonts::GetInstance().Init())
+	{
+		LOG_ERROR("Fonts could not initialize!");
 		return false;
 	}
 

@@ -6,6 +6,7 @@
 #include "Log.h"
 
 
+
 Map::Map()
 {
 }
@@ -96,6 +97,22 @@ void Map::OnRender(int x, int y)
 
             int spriteX = mTiles[vectorId].mSpriteId * TILE_SIZE;
             TextureBank::Get(mSpritesheet)->RenderScaled(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, 0, TILE_SIZE, TILE_SIZE);
+        }
+    }
+}
+
+void Map::AddToRenderQueue(int x, int y)
+{
+    for (int Y = 0; Y < mTilesPerColumn; Y++)
+    {
+        for (int X = 0; X < mTilesPerRow; X++)
+        {
+            int vectorId = X + Y * mTilesPerColumn;
+            int screenX = X * TILE_SIZE;
+            int screenY = Y * TILE_SIZE;
+
+            int spriteX = mTiles[vectorId].mSpriteId * TILE_SIZE;
+            TextureBank::Get(mSpritesheet)->AddToRenderQueue(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, 0, TILE_SIZE, TILE_SIZE, 1);
         }
     }
 }

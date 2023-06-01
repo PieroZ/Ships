@@ -18,5 +18,6 @@ public:
 	bool OnLoad(const std::string& filename, const std::string& spritesheet);
 	int GetIdFromCoordinates(int x, int y);
 	void OnRender(int x, int y);
+	void AddToRenderQueue(int x, int y);
 };
 

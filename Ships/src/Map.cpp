@@ -107,7 +107,7 @@ void Map::AddToRenderQueue(int x, int y)
     {
         for (int X = 0; X < mTilesPerRow; X++)
         {
-            int vectorId = X + Y * mTilesPerColumn;
+            int vectorId = X + Y * mTilesPerRow;
             int screenX = X * TILE_SIZE;
             int screenY = Y * TILE_SIZE;
 

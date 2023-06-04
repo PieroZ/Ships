@@ -49,6 +49,7 @@ public:
 
 	void AddToRenderQueue(int x, int y, int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight, int renderOrder);
 
+	const SDL_Rect& GetEntireTextureRect() const;
 	int GetWidth();
 	int GetHeight();
 };

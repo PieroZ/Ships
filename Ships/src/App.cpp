@@ -6,8 +6,8 @@
 
 #include "TextureBank.h"
 #include "AppStateManager.h"
-#include "ScreenText.h"
 #include "Fonts.h"
+#include "FPS.h"
 
 App App::mInstance;
 int App::mWindowWidth = 1024;
@@ -107,12 +107,6 @@ bool App::Init()
 		return false;
 	}
 
-	if (!ScreenText::GetInstance().Init())
-	{
-		LOG_ERROR("ScreenText could not initialize!");
-		return false;
-	}
-
 	if(!Fonts::GetInstance().Init())
 	{
 		LOG_ERROR("Fonts could not initialize!");
@@ -145,7 +139,7 @@ void App::Render()
 void App::Cleanup()
 {
 	TextureBank::Cleanup();
-	ScreenText::GetInstance().Cleanup();
+	Fonts::GetInstance().Cleanup();
 
 	if (mRenderer)
 	{
@@ -170,11 +164,16 @@ int App::Execute(int argc, char* argv[])
 	{
 		return 0;
 	}
+	auto& fps = FPS::GetInstance();
 
 	SDL_Event Event;
 
+	fps.StartFpsTimer();
+
 	while (mRunning)
 	{
+		//Start cap timer
+		fps.StartCapTimer();
 		while (SDL_PollEvent(&Event) != 0)
 		{
 			OnEvent(&Event);
@@ -184,11 +183,16 @@ int App::Execute(int argc, char* argv[])
 				mRunning = false;
 			}
 		}
+		
+		fps.CalculateAndCorrectFps();
 
 		Loop();
 		Render();
+		fps.IncCountedFrames();
 
-		SDL_Delay(1); // Breath
+		fps.WaitIfRenderedEarly();
+
+		//SDL_Delay(1); // Breath
 	}
 
 	Cleanup();

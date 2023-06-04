@@ -259,6 +259,12 @@ void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int norm
 	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder);
 }
 
+
+const SDL_Rect& Texture::GetEntireTextureRect() const
+{
+	return SDL_Rect{ 0,0,mWidth,mHeight };
+}
+
 //------------------------------------------------------------------------------
 int Texture::GetWidth() { return mWidth; }
 int Texture::GetHeight() { return mHeight; }

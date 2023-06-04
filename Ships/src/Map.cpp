@@ -111,8 +111,11 @@ void Map::AddToRenderQueue(int x, int y)
             int screenX = X * TILE_SIZE;
             int screenY = Y * TILE_SIZE;
 
-            int spriteX = mTiles[vectorId].mSpriteId * TILE_SIZE;
-            TextureBank::Get(mSpritesheet)->AddToRenderQueue(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, 0, TILE_SIZE, TILE_SIZE, 1);
+            int spritesPerRowInSpritesheet = TextureBank::Get(mSpritesheet)->GetWidth() / TILE_SIZE;
+            int spriteX = (mTiles[vectorId].mSpriteId % spritesPerRowInSpritesheet) * TILE_SIZE;
+
+            int spriteY = (mTiles[vectorId].mSpriteId / spritesPerRowInSpritesheet) * TILE_SIZE;
+            TextureBank::Get(mSpritesheet)->AddToRenderQueue(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, spriteY, TILE_SIZE, TILE_SIZE, 0);
         }
     }
 }

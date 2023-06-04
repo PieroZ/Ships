@@ -2,10 +2,10 @@
 #include "TextureBank.h"
 #include "Log.h"
 #include "Config.h"
-#include "ScreenText.h"
 #include "RenderQueue.h"
 #include "App.h"
 #include "Fonts.h"
+#include "FPS.h"
 
 
 
@@ -40,10 +40,18 @@ void AppStateTest::OnKeyUp(SDL_Event* event)
 	//mKeyboardHandler.HandleKeyboardEvent(event);
 	if (event->key.keysym.sym == SDLK_RETURN || event->key.keysym.sym == SDLK_KP_ENTER)
 	{
-		const std::string& mapFile = "res/maps/2.map";
-		mTestMap.OnLoad(mapFile, "ss_nomargin");
+		//const std::string& mapFile = "res/maps/2.map";
+		//mTestMap.OnLoad(mapFile, "ss_nomargin");
+		mTestSail.IncreaseSailLevel();
 	}
-
+	else if (event->key.keysym.sym == SDLK_w)
+	{
+		mTestSail.IncreaseSailLevel();
+	}
+	else if (event->key.keysym.sym == SDLK_s)
+	{
+		mTestSail.DecreaseSailLevel();
+	}
 }
 
 void AppStateTest::OnResize(int w, int h)
@@ -57,6 +65,10 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	this->Renderer = Renderer;
 	const std::string& mapFile = "res/maps/2.map";
 	mTestMap.OnLoad(mapFile, "ss_nomargin");
+
+	shipMovementController = std::make_unique<ShipWithSailsMovementController>(&mTestSail, &velCalc);
+
+	mPlayerShip = std::make_unique<Ship>(std::move(shipMovementController));
 }
 
 void AppStateTest::OnDeactivate()
@@ -85,7 +97,7 @@ void AppStateTest::OnLoop()
 	//{
 	//	LOG_INFO("Enter released!");
 	//}
-
+	mPlayerShip->Move();
 }
 
 
@@ -94,16 +106,19 @@ void AppStateTest::OnRender()
 {
 	//TextureBank::Get("bg_1920_1080")->RenderScaled(0, 0, App::GetInstance()->GetWindowWidth(), App::GetInstance()->GetWindowHeight(), mPlayerX/2, mPlayerY/2, TextureBank::Get("bg_1920_1080")->GetWidth()/2, TextureBank::Get("bg_1920_1080")->GetHeight()/2);
 
+	mPlayerShip->AddToRenderQueue(1);
 	mTestMap.AddToRenderQueue(0, 0);
 	Texture screenText;
-	std::string spritesCount = std::to_string(RenderQueue::GetInstance().GetSpritesCount());
+	auto& fps = FPS::GetInstance();
+	//std::string spritesCount = std::to_string(RenderQueue::GetInstance().GetSpritesCount());
+	std::string spritesCount = fps.GetFpsString();
 	screenText.LoadText(Fonts::GetInstance().GetFont(), spritesCount, SDL_Color{ 255, 255, 255 });
 
 	screenText.AddToRenderQueue(200, 200, screenText.GetWidth(), screenText.GetHeight(), 0, 0, screenText.GetWidth(), screenText.GetHeight(), 1);
 
 	RenderQueue::GetInstance().Render();
 
-	TextureBank::Get("biggerBoat")->RenderScaled(App::GetInstance()->GetWindowWidth()/2, App::GetInstance()->GetWindowHeight()/2);
+	//TextureBank::Get("boat")->RenderScaled(App::GetInstance()->GetWindowWidth()/2, App::GetInstance()->GetWindowHeight()/2);
 
 	//std::string playerPosString = "mPlayerx = " + std::to_string(mPlayerX);
 	//ScreenText::GetInstance().RenderText(playerPosString, 200, 200, SDL_Color{ 255, 0, 0 });

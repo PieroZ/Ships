@@ -3,6 +3,12 @@
 #include "AppState.h"
 #include "KeyboardHandler.h"
 #include "Map.h"
+#include "Ship.h"
+#include "SailsController.h"
+#include "NoAccelerationVelocityCalculator.h"
+#include "ShipWithSailsMovementController.h"
+
+#include <memory>
 
 class AppStateTest : public AppState
 {
@@ -13,6 +19,12 @@ public:
     static bool mEnterPressed;
     KeyboardHandler mKeyboardHandler;
     Map mTestMap;
+    std::unique_ptr <Ship> mPlayerShip;
+    SailsController mTestSail;
+
+    std::unique_ptr<ShipWithSailsMovementController> shipMovementController;
+    NoAccelerationVelocityCalculator velCalc;
+
     SDL_Point lastMouseClick{ 0,0 };
 private:
     static AppStateTest Instance;

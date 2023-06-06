@@ -26,11 +26,13 @@ public:
 	//Texture(SDL_Texture* SDLTexture);
 	~Texture();
 
-	int GetRenderOrder() const;
+	
 	SDL_Texture* GetSDLTexture();
 	SDL_Renderer* GetRenderer();
 	//SDL_Rect GetSrcRect() const;
 	//SDL_Rect GetDstRect() const;
+
+	void SetAlpha(Uint8 alpha) const;
 
 	void Cleanup();
 	bool Load(SDL_Renderer* mRenderer, std::string Filename);

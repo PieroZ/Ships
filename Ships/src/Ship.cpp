@@ -33,7 +33,7 @@ void Ship::AddToRenderQueue(int renderOrder)
         srcRect = TextureBank::Get(mShipTextureName)->GetEntireTextureRect();
     }
     //RenderQueue::GetInstance().AddToRenderQueue(TextureBank::Get(mShipTextureName), TextureBank::Get(mShipTextureName)->GetEntireTextureRect(), dstRect, renderOrder);
-    RenderQueue::GetInstance().AddToRenderQueue(TextureBank::Get(mShipTextureName), srcRect, dstRect, mShipMovementController->GetShipRotation(), mShipMovementController->GetTextureCenter(), renderOrder);
+    RenderQueue::GetInstance().AddToRenderQueue(TextureBank::Get(mShipTextureName), srcRect, dstRect, mShipMovementController->GetShipRotation(), mShipMovementController->GetTextureCenter(), renderOrder, 255, true);
 }
 
 bool Ship::Init()

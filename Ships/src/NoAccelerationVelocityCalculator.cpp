@@ -1,5 +1,8 @@
 #include "NoAccelerationVelocityCalculator.h"
+
+#define _USE_MATH_DEFINES
 #include <cmath>
+
 
 NoAccelerationVelocityCalculator::~NoAccelerationVelocityCalculator()
 {
@@ -15,7 +18,7 @@ int NoAccelerationVelocityCalculator::CalculateVelocityFromWind(int shipVelocity
 // This function assumes that the ship's sprite prow is directed at the bottom - alongside the y axis hence the formula
 void NoAccelerationVelocityCalculator::CalculateVelocityFromEngine(double engineSpeed, const int shipAngle, double& velX, double& velY)
 {
-	static const double PI = 3.14159265;
-	velX = -1.0 * sin(shipAngle * PI/180) * engineSpeed;
-	velY =  1.0 * cos(shipAngle * PI/180) * engineSpeed;
+	//static const double PI = 3.14159265;
+	velX = -1.0 * sin(shipAngle * M_PI/180) * engineSpeed;
+	velY =  1.0 * cos(shipAngle * M_PI/180) * engineSpeed;
 }

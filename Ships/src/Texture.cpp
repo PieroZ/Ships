@@ -48,6 +48,11 @@ SDL_Renderer* Texture::GetRenderer()
 //	return mDstRect;
 //}
 
+void Texture::SetAlpha(Uint8 alpha) const
+{
+	SDL_SetTextureAlphaMod(mSDLTexture, alpha);
+}
+
 void Texture::Cleanup()
 {
 	if (mSDLTexture)
@@ -257,7 +262,7 @@ void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int norm
 
 
 
-	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder);
+	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder, 255, true);
 }
 
 

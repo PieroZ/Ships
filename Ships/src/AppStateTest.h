@@ -7,6 +7,7 @@
 #include "SailsController.h"
 #include "NoAccelerationVelocityCalculator.h"
 #include "AbstractShipMovementController.h"
+#include "TargetWaypoint.h"
 
 #include <memory>
 
@@ -19,7 +20,11 @@ public:
     static bool mEnterPressed;
     KeyboardHandler mKeyboardHandler;
     Map mTestMap;
+
+    std::vector<std::unique_ptr<TargetWaypoint>> mTargetWaypoints;
     std::unique_ptr <Ship> mPlayerShip;
+    std::unique_ptr <Ship> mAIShip;
+
     SailsController mTestSail;
 
     std::unique_ptr<AbstractShipMovementController> mShipMovementController;

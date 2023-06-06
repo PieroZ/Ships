@@ -91,6 +91,17 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	mShipMovementController = std::make_unique<ShipWithEngineMovementController>(std::move(mVelCalc));
 
 	mPlayerShip = std::make_unique<Ship>(std::move(mShipMovementController));
+
+
+	mTargetWaypoints.push_back(std::make_unique<TargetWaypoint>(800, 600));
+
+	mTargetWaypoints[0]->SetTextureAlpha(127);
+
+	mTargetWaypoints.push_back(std::make_unique<TargetWaypoint>(200, 900));
+	
+	mTargetWaypoints[1]->SetTextureAlpha(214);
+
+	//mAIShip = std::make_unique<Ship>(std::move(mShipMovementController));
 }
 
 void AppStateTest::OnDeactivate()
@@ -146,6 +157,11 @@ void AppStateTest::OnRender()
 	Texture* windArrowTexture = TextureBank::Get("windArrow");
 
 	windArrowTexture->AddToRenderQueue(1600, 900, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 0, 0, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 5);
+
+	for (auto&& wp : mTargetWaypoints)
+	{
+		wp->AddToRenderQueue(5);
+	}
 
 	RenderQueue::GetInstance().Render();
 

@@ -6,7 +6,7 @@
 #include "Ship.h"
 #include "SailsController.h"
 #include "NoAccelerationVelocityCalculator.h"
-#include "ShipWithSailsMovementController.h"
+#include "AbstractShipMovementController.h"
 
 #include <memory>
 
@@ -22,8 +22,8 @@ public:
     std::unique_ptr <Ship> mPlayerShip;
     SailsController mTestSail;
 
-    std::unique_ptr<ShipWithSailsMovementController> shipMovementController;
-    NoAccelerationVelocityCalculator velCalc;
+    std::unique_ptr<AbstractShipMovementController> mShipMovementController;
+    std::unique_ptr < NoAccelerationVelocityCalculator> mVelCalc;
 
     SDL_Point lastMouseClick{ 0,0 };
 private:

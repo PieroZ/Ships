@@ -7,6 +7,9 @@
 #include "Fonts.h"
 #include "FPS.h"
 
+#include "ShipWithSailsMovementController.h"
+#include "ShipWithEngineMovementController.h"
+
 
 
 AppStateTest AppStateTest::Instance;
@@ -26,6 +29,21 @@ AppStateTest::~AppStateTest()
 void AppStateTest::OnKeyDown(SDL_Event* event)
 {
 	//mKeyboardHandler.HandleKeyboardEvent(event);
+
+
+	if (event->key.keysym.sym == SDLK_r)
+	{
+		mPlayerShip->SetClockwiseRotation();
+	}
+	else if (event->key.keysym.sym == SDLK_t)
+	{
+		mPlayerShip->SetCounterclockwiseRotation();
+	}
+	else if (event->key.keysym.sym == SDLK_p)
+	{
+		mPlayerShip->StopRotate();
+	}
+	//else if (event->key.keysym.sym == SDLK_p)
 }
 //------------------------------------
 
@@ -46,11 +64,13 @@ void AppStateTest::OnKeyUp(SDL_Event* event)
 	}
 	else if (event->key.keysym.sym == SDLK_w)
 	{
-		mTestSail.IncreaseSailLevel();
+		//mTestSail.IncreaseSailLevel();
+		mPlayerShip->OnWKeyAction();
 	}
 	else if (event->key.keysym.sym == SDLK_s)
 	{
-		mTestSail.DecreaseSailLevel();
+		//mTestSail.DecreaseSailLevel();
+		mPlayerShip->OnSKeyAction();
 	}
 }
 
@@ -66,9 +86,11 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	const std::string& mapFile = "res/maps/2.map";
 	mTestMap.OnLoad(mapFile, "ss_nomargin");
 
-	shipMovementController = std::make_unique<ShipWithSailsMovementController>(&mTestSail, &velCalc);
+	//mShipMovementController = std::make_unique<ShipWithSailsMovementController>(&mTestSail, &mVelCalc);
+	mVelCalc = std::make_unique< NoAccelerationVelocityCalculator>();
+	mShipMovementController = std::make_unique<ShipWithEngineMovementController>(std::move(mVelCalc));
 
-	mPlayerShip = std::make_unique<Ship>(std::move(shipMovementController));
+	mPlayerShip = std::make_unique<Ship>(std::move(mShipMovementController));
 }
 
 void AppStateTest::OnDeactivate()
@@ -98,6 +120,7 @@ void AppStateTest::OnLoop()
 	//	LOG_INFO("Enter released!");
 	//}
 	mPlayerShip->Move();
+	mPlayerShip->Rotate();
 }
 
 
@@ -109,12 +132,20 @@ void AppStateTest::OnRender()
 	mPlayerShip->AddToRenderQueue(1);
 	mTestMap.AddToRenderQueue(0, 0);
 	Texture screenText;
+	Texture shipDataScreenText;
 	auto& fps = FPS::GetInstance();
 	//std::string spritesCount = std::to_string(RenderQueue::GetInstance().GetSpritesCount());
 	std::string spritesCount = fps.GetFpsString();
 	screenText.LoadText(Fonts::GetInstance().GetFont(), spritesCount, SDL_Color{ 255, 255, 255 });
-
 	screenText.AddToRenderQueue(200, 200, screenText.GetWidth(), screenText.GetHeight(), 0, 0, screenText.GetWidth(), screenText.GetHeight(), 1);
+
+	const std::string& shipControllerData = mPlayerShip->ToText();
+	shipDataScreenText.LoadText(Fonts::GetInstance().GetFont(), shipControllerData, SDL_Color{ 255, 255, 255 });
+	shipDataScreenText.AddToRenderQueue(1600, 700, shipDataScreenText.GetWidth(), shipDataScreenText.GetHeight(), 0, 0, shipDataScreenText.GetWidth(), shipDataScreenText.GetHeight(), 1);
+
+	Texture* windArrowTexture = TextureBank::Get("windArrow");
+
+	windArrowTexture->AddToRenderQueue(1600, 900, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 0, 0, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 5);
 
 	RenderQueue::GetInstance().Render();
 

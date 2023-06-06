@@ -43,3 +43,6 @@
 **/bin/
 bin-int/
 Intermediates/
+
+# Unused graphics
+Ships/res/sprites/unused

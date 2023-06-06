@@ -4,7 +4,6 @@
 
 ShipWithSailsMovementController::ShipWithSailsMovementController(SailsController* sailsController, VelocityCalculator* velocityCalculator) : mSailsController(sailsController), mVelocityCalculator(velocityCalculator)
 {
-
 }
 
 ShipWithSailsMovementController::~ShipWithSailsMovementController()
@@ -32,6 +31,7 @@ void ShipWithSailsMovementController::Move()
 	CalculateSpeed();
 
 	mX += mVelocityX;
+	mY += mVelocityY;
 }
 
 void ShipWithSailsMovementController::CalculateSpeed()
@@ -44,3 +44,21 @@ void ShipWithSailsMovementController::CalculateSpeed()
 	auto xVelocity = mVelocityCalculator->CalculateVelocityFromWind(mVelocityX, wind.GetWindVelocity(), sailsVelocityMoidifer);
 	mVelocityX = xVelocity;
 }
+
+void ShipWithSailsMovementController::OnWKeyAction()
+{
+}
+
+void ShipWithSailsMovementController::OnSKeyAction()
+{
+}
+
+//void ShipWithSailsMovementController::RotateShipClockwise()
+//{
+//	mShipRotation += ROTATION_SPEED;
+//}
+//
+//void ShipWithSailsMovementController::RotateShipCounterclockwise()
+//{
+//	mShipRotation -= ROTATION_SPEED;
+//}

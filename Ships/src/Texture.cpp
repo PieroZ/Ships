@@ -119,7 +119,8 @@ bool Texture::LoadText(TTF_Font* font, const std::string& textureText, const SDL
 	Cleanup();
 
 	//Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, textureText.c_str(), textColor);
+	static const Uint32 WRAP_LENGTH = 360;
+	SDL_Surface* textSurface = TTF_RenderText_Solid_Wrapped(font, textureText.c_str(), textColor, WRAP_LENGTH);
 	if (textSurface != NULL)
 	{
 		//Create texture from surface pixels
@@ -263,6 +264,11 @@ void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int norm
 const SDL_Rect& Texture::GetEntireTextureRect() const
 {
 	return SDL_Rect{ 0,0,mWidth,mHeight };
+}
+
+const SDL_Point& Texture::GetCenterPointOfTexture() const
+{
+	return SDL_Point{ mWidth / 2, mHeight / 2 };
 }
 
 //------------------------------------------------------------------------------

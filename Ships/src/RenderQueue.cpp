@@ -24,7 +24,15 @@ void RenderQueue::Render()
 	// Render the sprites in the sorted order
 	for (const auto& sprite: sprites)
 	{
-		SDL_RenderCopy(sprite->GetTexture()->GetRenderer(), sprite->GetTexture()->GetSDLTexture(), &sprite->GetSrcRect(), &sprite->GetDstRect());
+		if (sprite->GetAngle() == 0.0)
+		{
+			SDL_RenderCopy(sprite->GetTexture()->GetRenderer(), sprite->GetTexture()->GetSDLTexture(), &sprite->GetSrcRect(), &sprite->GetDstRect());
+		}
+		else
+		{
+			SDL_RenderCopyEx(sprite->GetTexture()->GetRenderer(), sprite->GetTexture()->GetSDLTexture(), &sprite->GetSrcRect(), &sprite->GetDstRect(), sprite->GetAngle(), &sprite->GetCenter(), SDL_RendererFlip::SDL_FLIP_NONE);
+
+		}
 	}
 
 	sprites.clear();
@@ -38,5 +46,11 @@ int RenderQueue::GetSpritesCount() const
 void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, int renderOrder)
 {
 	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, renderOrder);
+	sprites.push_back(ptr);
+}
+
+void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, double angle, const SDL_Point& center, int renderOrder)
+{
+	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, angle, center, renderOrder);
 	sprites.push_back(ptr);
 }

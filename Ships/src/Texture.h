@@ -11,6 +11,7 @@ class Texture
 private:
 	std::string Filename;
 
+	// This value corresponds to the entire image width, meaning t hat if entire spritesheet is loaded into Texture that values will correspond to the spritesheet size rather than single sprite dimensions
 	int mWidth = 0;
 	int mHeight = 0;
 	//int mRenderOrder = 0;
@@ -50,6 +51,7 @@ public:
 	void AddToRenderQueue(int x, int y, int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight, int renderOrder);
 
 	const SDL_Rect& GetEntireTextureRect() const;
+	const SDL_Point& GetCenterPointOfTexture() const;
 	int GetWidth();
 	int GetHeight();
 };

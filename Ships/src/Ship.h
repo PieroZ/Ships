@@ -35,7 +35,9 @@ public:
     
 
     void OnWKeyAction();
+    void OnDKeyAction();
     void OnSKeyAction();
+    void OnAKeyAction();
 
     std::string ToText();
 

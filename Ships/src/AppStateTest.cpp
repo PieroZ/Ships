@@ -28,21 +28,22 @@ AppStateTest::~AppStateTest()
 
 void AppStateTest::OnKeyDown(SDL_Event* event)
 {
-	//mKeyboardHandler.HandleKeyboardEvent(event);
+	mKeyboardHandler.HandleKeyboardEvent(event);
 
 
-	if (event->key.keysym.sym == SDLK_r)
-	{
-		mPlayerShip->SetClockwiseRotation();
-	}
-	else if (event->key.keysym.sym == SDLK_t)
-	{
-		mPlayerShip->SetCounterclockwiseRotation();
-	}
-	else if (event->key.keysym.sym == SDLK_p)
-	{
-		mPlayerShip->StopRotate();
-	}
+	//if (event->key.keysym.sym == SDLK_r)
+	//{
+	//	mPlayerShip->SetClockwiseRotation();
+	//}
+	//else if (event->key.keysym.sym == SDLK_t)
+	//{
+	//	mPlayerShip->SetCounterclockwiseRotation();
+	//}
+	//else if (event->key.keysym.sym == SDLK_p)
+	//{
+	//	mPlayerShip->StopRotate();
+	//}
+
 	//else if (event->key.keysym.sym == SDLK_p)
 }
 //------------------------------------
@@ -55,23 +56,25 @@ void AppStateTest::OnLButtonDown(int x, int y)
 }
 void AppStateTest::OnKeyUp(SDL_Event* event)
 {
-	//mKeyboardHandler.HandleKeyboardEvent(event);
-	if (event->key.keysym.sym == SDLK_RETURN || event->key.keysym.sym == SDLK_KP_ENTER)
-	{
-		//const std::string& mapFile = "res/maps/2.map";
-		//mTestMap.OnLoad(mapFile, "ss_nomargin");
-		mTestSail.IncreaseSailLevel();
-	}
-	else if (event->key.keysym.sym == SDLK_w)
-	{
-		//mTestSail.IncreaseSailLevel();
-		mPlayerShip->OnWKeyAction();
-	}
-	else if (event->key.keysym.sym == SDLK_s)
-	{
-		//mTestSail.DecreaseSailLevel();
-		mPlayerShip->OnSKeyAction();
-	}
+	mKeyboardHandler.HandleKeyboardEvent(event);
+	
+	//if (event->key.keysym.sym == SDLK_RETURN || event->key.keysym.sym == SDLK_KP_ENTER)
+	//{
+	//	//const std::string& mapFile = "res/maps/2.map";
+	//	//mTestMap.OnLoad(mapFile, "ss_nomargin");
+	//	mTestSail.IncreaseSailLevel();
+	//}
+	//else if (event->key.keysym.sym == SDLK_w)
+	//{
+	//	//mTestSail.IncreaseSailLevel();
+	//	mPlayerShip->OnWKeyAction();
+	//}
+	//else if (event->key.keysym.sym == SDLK_s)
+	//{
+	//	//mTestSail.DecreaseSailLevel();
+	//	mPlayerShip->OnSKeyAction();
+	//}
+
 }
 
 void AppStateTest::OnResize(int w, int h)
@@ -121,6 +124,8 @@ void AppStateTest::OnDeactivate()
 
 void AppStateTest::OnLoop()
 {
+
+
 	//if (mKeyboardHandler.IsPressed(SDLK_LEFT))
 	//{
 	//	mPlayerX--;
@@ -129,18 +134,26 @@ void AppStateTest::OnLoop()
 	//{
 	//	mPlayerX++;
 	//}
-	//if (mKeyboardHandler.IsPressed(SDLK_UP))
-	//{
-	//	mPlayerY--;
-	//}
-	//if (mKeyboardHandler.IsPressed(SDLK_DOWN))
-	//{
-	//	mPlayerY++;
-	//}
-	//if (mKeyboardHandler.IsReleased(SDLK_KP_ENTER))
-	//{
-	//	LOG_INFO("Enter released!");
-	//}
+	if (mKeyboardHandler.IsPressed(SDLK_UP))
+	{
+		mPlayerShip->OnWKeyAction();
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_DOWN))
+	{
+		mPlayerShip->OnSKeyAction();
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_RIGHT))
+	{
+		mPlayerShip->OnDKeyAction();
+	}
+	if (mKeyboardHandler.IsPressed(SDLK_LEFT))
+	{
+		mPlayerShip->OnAKeyAction();
+	}
+	if (mKeyboardHandler.IsReleased(SDLK_KP_ENTER))
+	{
+		LOG_INFO("Enter released!");
+	}
 	if (mPlayerShip->Move() == MoveReturnValues::reachedWaypoint)
 	{
 		mTargetWaypointsDisplay.SetTargetWaypoints(TargetWaypointBrowser::GetInstance().GetCurrentTargetWaypoint(mPlayerShip), TargetWaypointBrowser::GetInstance().GetNextTargetWaypoint(mPlayerShip));

@@ -139,10 +139,20 @@ void Ship::OnWKeyAction()
 	mShipMovementController->OnWKeyAction();
 }
 
+void Ship::OnDKeyAction()
+{
+	mShipMovementController->RotateShipClockwise();
+}
+
 void Ship::OnSKeyAction()
 {
 
 	mShipMovementController->OnSKeyAction();
+}
+
+void Ship::OnAKeyAction()
+{
+	mShipMovementController->RotateShipCounterclockwise();
 }
 
 std::string Ship::ToText()

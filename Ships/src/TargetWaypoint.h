@@ -15,6 +15,7 @@ public:
 	void SetDefaultTexture();
 	void SetSecondaryTexture();
 	SDL_Rect GetCollisionRect() const;
+	SDL_Point GetCollisionCenter() const;
 	virtual void AddToRenderQueue(int renderOrder) override;
 
 };

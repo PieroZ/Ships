@@ -11,6 +11,8 @@ public:
 	virtual void OnWKeyAction() = 0;
 	virtual void OnSKeyAction() = 0;
 
+	virtual void OnLoop();
+
 	virtual void RotateShipClockwise();
 	virtual void RotateShipCounterclockwise();
 	virtual std::string ToText();

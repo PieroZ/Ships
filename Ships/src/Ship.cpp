@@ -64,6 +64,7 @@ bool Ship::LoadTexture()
 
 MoveReturnValues Ship::Move()
 {
+	mShipMovementController->OnLoop();
 	mShipMovementController->Move();
 	mAnimation->OnAnimate();
 	if (mCurrentTargetWaypoint)

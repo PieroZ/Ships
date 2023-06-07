@@ -7,9 +7,12 @@
 #include "Fonts.h"
 #include "FPS.h"
 
+#include "AIGotoTargetASAPController.h"
 #include "ShipWithSailsMovementController.h"
 #include "ShipWithEngineMovementController.h"
 #include "TargetWaypointBrowser.h"
+
+#include <random>
 
 
 AppStateTest AppStateTest::Instance;
@@ -83,6 +86,23 @@ void AppStateTest::OnResize(int w, int h)
 }
 
 
+void AppStateTest::SetupTargetWaypoints()
+{
+	const int nrolls = 100;
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	for (int i = 0; i <= nrolls; ++i)
+	{
+		std::uniform_int_distribution<int> disX(0, App::GetWindowTargetWidth() * 8 / 10);
+		std::uniform_int_distribution<int> disY(0, App::GetWindowTargetHeight() * 8 / 10);
+
+		mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(disX(gen), disY(gen)));
+	}
+
+
+}
+
 void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 {
 	this->Renderer = Renderer;
@@ -91,14 +111,20 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 
 	//mShipMovementController = std::make_unique<ShipWithSailsMovementController>(&mTestSail, &mVelCalc);
 	mVelCalc = std::make_unique< NoAccelerationVelocityCalculator>();
+
+	mThisShouldNotBeAUniquePtrCalc = std::make_unique< NoAccelerationVelocityCalculator>();
+
 	mShipMovementController = std::make_unique<ShipWithEngineMovementController>(std::move(mVelCalc));
+	mAIShipMovementController = std::make_unique<AIGotoTargetASAPController>(std::move(mThisShouldNotBeAUniquePtrCalc));
 
 	//mPlayerShip = std::make_shared<Ship>(std::move(mShipMovementController));
 	mPlayerShip =  new Ship(std::move(mShipMovementController));
 
+	SetupTargetWaypoints();
 
-	mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(100, 600));
-	mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(1200, 900));
+
+	/*mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(100, 600));
+	mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(1200, 900));*/
 
 	//mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(100, 100));
 	//mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(1000, 400));
@@ -110,6 +136,8 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	mPlayerShip->SetTargetWaypoint();
 	mTargetWaypointsDisplay.SetTargetWaypoints(TargetWaypointBrowser::GetInstance().GetCurrentTargetWaypoint(mPlayerShip), TargetWaypointBrowser::GetInstance().GetNextTargetWaypoint(mPlayerShip));
 
+	mAIShip = new Ship(std::move(mAIShipMovementController));
+
 
 
 	//mTargetWaypoints[3]->SetTextureAlpha(214);
@@ -119,7 +147,8 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 
 void AppStateTest::OnDeactivate()
 {
-	delete(mPlayerShip);
+	if(mPlayerShip)	delete(mPlayerShip);
+	if(mAIShip) delete(mAIShip);
 }
 
 void AppStateTest::OnLoop()
@@ -159,6 +188,8 @@ void AppStateTest::OnLoop()
 		mTargetWaypointsDisplay.SetTargetWaypoints(TargetWaypointBrowser::GetInstance().GetCurrentTargetWaypoint(mPlayerShip), TargetWaypointBrowser::GetInstance().GetNextTargetWaypoint(mPlayerShip));
 	}
 	mPlayerShip->Rotate();
+	mAIShip->Move();
+	//mAIShipMovementController->OnLoop();
 }
 
 
@@ -191,6 +222,8 @@ void AppStateTest::OnRender()
 	//}
 
 	mTargetWaypointsDisplay.AddToRenderQueue(5);
+
+	mAIShip->AddToRenderQueue(1);
 
 	RenderQueue::GetInstance().Render();
 

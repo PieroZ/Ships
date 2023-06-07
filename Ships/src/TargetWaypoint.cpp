@@ -30,6 +30,13 @@ SDL_Rect TargetWaypoint::GetCollisionRect() const
 	return SDL_Rect{ mX, mY, mTexture->GetWidth(), mTexture->GetHeight() };
 }
 
+SDL_Point TargetWaypoint::GetCollisionCenter() const
+{
+	const SDL_Rect& a = GetCollisionRect();
+
+	return { a.x + a.w / 2, a.y + a.h / 2 };
+}
+
 void TargetWaypoint::AddToRenderQueue(int renderOrder)
 {
 	Renderable::AddToRenderQueue(renderOrder);

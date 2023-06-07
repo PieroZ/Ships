@@ -6,6 +6,10 @@ AbstractShipMovementController::~AbstractShipMovementController()
 
 }
 
+void AbstractShipMovementController::OnLoop()
+{
+}
+
 void AbstractShipMovementController::RotateShipClockwise()
 {
 	mShipRotation += ROTATION_SPEED;

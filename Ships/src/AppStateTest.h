@@ -26,12 +26,17 @@ public:
     TargetWaypointsDisplay mTargetWaypointsDisplay;
 //    std::shared_ptr <Ship> mPlayerShip;
     Ship* mPlayerShip;
-    std::unique_ptr <Ship> mAIShip;
+    Ship* mAIShip;
 
     SailsController mTestSail;
 
     std::unique_ptr<AbstractShipMovementController> mShipMovementController;
-    std::unique_ptr < NoAccelerationVelocityCalculator> mVelCalc;
+
+    std::unique_ptr<AbstractShipMovementController> mAIShipMovementController;
+
+    std::unique_ptr <NoAccelerationVelocityCalculator> mVelCalc;
+
+    std::unique_ptr <NoAccelerationVelocityCalculator> mThisShouldNotBeAUniquePtrCalc;
 
     SDL_Point lastMouseClick{ 0,0 };
 private:
@@ -49,6 +54,7 @@ public:
 
 
     void Init(SDL_Renderer* Renderer);
+    void SetupTargetWaypoints();
 
     void OnActivate(SDL_Renderer* Renderer);
 

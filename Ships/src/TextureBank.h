@@ -27,6 +27,9 @@ public:
 
 private:
 	static void AddTexture(SDL_Renderer* mRenderer, std::string ID, std::string Filename);
+	static void CloneSelectedTextures();
+
+	
 
 public:
 	static Texture* Get(std::string ID);

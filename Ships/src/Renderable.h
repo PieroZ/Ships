@@ -4,6 +4,7 @@
 class Renderable
 {
 public:
+	Renderable();
 	Renderable(int x, int y);
 	virtual ~Renderable() = default;
 	
@@ -14,6 +15,5 @@ protected:
 	int mX;
 	int mY;
 	Texture* mTexture;
-	Uint8 mAlpha = 255;
 };
 

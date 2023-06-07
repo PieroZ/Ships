@@ -24,10 +24,6 @@ void RenderQueue::Render()
 	// Render the sprites in the sorted order
 	for (const auto& sprite: sprites)
 	{
-		if (sprite->GetAlpha() != 255)
-		{
-			sprite->GetTexture()->SetAlpha(sprite->GetAlpha());
-		}
 		if (sprite->GetAngle() == 0.0)
 		{
 			SDL_RenderCopy(sprite->GetTexture()->GetRenderer(), sprite->GetTexture()->GetSDLTexture(), &sprite->GetSrcRect(), &sprite->GetDstRect());
@@ -35,12 +31,6 @@ void RenderQueue::Render()
 		else
 		{
 			SDL_RenderCopyEx(sprite->GetTexture()->GetRenderer(), sprite->GetTexture()->GetSDLTexture(), &sprite->GetSrcRect(), &sprite->GetDstRect(), sprite->GetAngle(), &sprite->GetCenter(), SDL_RendererFlip::SDL_FLIP_NONE);
-
-		
-			if (sprite->GetAlpha() != 255)
-			{
-				sprite->GetTexture()->SetAlpha(255);
-			}
 		}
 
 		if (sprite->GetDrawSpriteRectFlag())
@@ -57,14 +47,14 @@ int RenderQueue::GetSpritesCount() const
 	return sprites.size();
 }
 
-void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, int renderOrder, Uint8 alpha, bool drawRectFlag/* = false*/)
+void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, int renderOrder, bool drawRectFlag/* = false*/)
 {
-	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, renderOrder, alpha, drawRectFlag);
+	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, renderOrder, drawRectFlag);
 	sprites.push_back(ptr);
 }
 
-void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, double angle, const SDL_Point& center, int renderOrder, Uint8 alpha, bool drawRectFlag /*= false*/)
+void RenderQueue::AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, double angle, const SDL_Point& center, int renderOrder, bool drawRectFlag /*= false*/)
 {
-	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, angle, center, renderOrder, alpha, drawRectFlag);
+	std::shared_ptr<Sprite> ptr = std::make_shared<Sprite>(texture, srcRect, dstRect, angle, center, renderOrder, drawRectFlag);
 	sprites.push_back(ptr);
 }

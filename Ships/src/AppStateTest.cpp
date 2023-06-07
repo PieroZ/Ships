@@ -9,7 +9,7 @@
 
 #include "ShipWithSailsMovementController.h"
 #include "ShipWithEngineMovementController.h"
-
+#include "TargetWaypointBrowser.h"
 
 
 AppStateTest AppStateTest::Instance;
@@ -90,22 +90,33 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	mVelCalc = std::make_unique< NoAccelerationVelocityCalculator>();
 	mShipMovementController = std::make_unique<ShipWithEngineMovementController>(std::move(mVelCalc));
 
-	mPlayerShip = std::make_unique<Ship>(std::move(mShipMovementController));
+	//mPlayerShip = std::make_shared<Ship>(std::move(mShipMovementController));
+	mPlayerShip =  new Ship(std::move(mShipMovementController));
 
 
-	mTargetWaypoints.push_back(std::make_unique<TargetWaypoint>(800, 600));
+	mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(100, 600));
+	mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(1200, 900));
 
-	mTargetWaypoints[0]->SetTextureAlpha(127);
+	//mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(100, 100));
+	//mTargetWaypoints.push_back(std::make_shared<TargetWaypoint>(1000, 400));
 
-	mTargetWaypoints.push_back(std::make_unique<TargetWaypoint>(200, 900));
-	
-	mTargetWaypoints[1]->SetTextureAlpha(214);
+	TargetWaypointBrowser::GetInstance().SetLevelTargetWaypoints(mTargetWaypoints);
+
+	//TargetWaypointBrowser::GetInstance().SetNextTargetWaypoint(mPlayerShip);
+
+	mPlayerShip->SetTargetWaypoint();
+	mTargetWaypointsDisplay.SetTargetWaypoints(TargetWaypointBrowser::GetInstance().GetCurrentTargetWaypoint(mPlayerShip), TargetWaypointBrowser::GetInstance().GetNextTargetWaypoint(mPlayerShip));
+
+
+
+	//mTargetWaypoints[3]->SetTextureAlpha(214);
 
 	//mAIShip = std::make_unique<Ship>(std::move(mShipMovementController));
 }
 
 void AppStateTest::OnDeactivate()
 {
+	delete(mPlayerShip);
 }
 
 void AppStateTest::OnLoop()
@@ -130,7 +141,10 @@ void AppStateTest::OnLoop()
 	//{
 	//	LOG_INFO("Enter released!");
 	//}
-	mPlayerShip->Move();
+	if (mPlayerShip->Move() == MoveReturnValues::reachedWaypoint)
+	{
+		mTargetWaypointsDisplay.SetTargetWaypoints(TargetWaypointBrowser::GetInstance().GetCurrentTargetWaypoint(mPlayerShip), TargetWaypointBrowser::GetInstance().GetNextTargetWaypoint(mPlayerShip));
+	}
 	mPlayerShip->Rotate();
 }
 
@@ -158,10 +172,12 @@ void AppStateTest::OnRender()
 
 	windArrowTexture->AddToRenderQueue(1600, 900, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 0, 0, windArrowTexture->GetWidth(), windArrowTexture->GetHeight(), 5);
 
-	for (auto&& wp : mTargetWaypoints)
-	{
-		wp->AddToRenderQueue(5);
-	}
+	//for (auto&& wp : mTargetWaypoints)
+	//{
+	//	wp->AddToRenderQueue(5);
+	//}
+
+	mTargetWaypointsDisplay.AddToRenderQueue(5);
 
 	RenderQueue::GetInstance().Render();
 

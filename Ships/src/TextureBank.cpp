@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Log.h"
 
+static const std::string DIRECTORY_PATH = "res/sprites";
+
 //=============================================================================
 std::map<std::string, Texture*> TextureBank::TexList;
 
@@ -17,11 +19,10 @@ bool TextureBank::Init()
 	if (!mRenderer) return false;
 
 
-	std::string directoryPath = "res/sprites";
 	try
 	{
 		// Iterate over the files in the directory
-		for (const auto& entry : std::filesystem::directory_iterator(directoryPath))
+		for (const auto& entry : std::filesystem::directory_iterator(DIRECTORY_PATH))
 		{
 			if (entry.is_regular_file())
 			{
@@ -45,6 +46,8 @@ bool TextureBank::Init()
 		LOG_CRITICAL("An exception occurred: {0}", e.what());;
 		return false;
 	}
+
+	CloneSelectedTextures();
 
 	return true;
 }
@@ -81,6 +84,20 @@ void TextureBank::AddTexture(SDL_Renderer* mRenderer, std::string ID, std::strin
 	}
 
 	TexList[ID] = NewTexture;
+}
+
+void TextureBank::CloneSelectedTextures()
+{
+	SDL_Renderer* mRenderer = App::GetInstance()->GetRenderer();
+	std::vector<std::string> texturesToClone = { "dot" };
+	static std::string PNG = ".png";
+
+	for (auto&& textureName : texturesToClone)
+	{
+		std::string fileName = DIRECTORY_PATH + "/" + textureName + PNG;
+		std::string ID = textureName + "2";
+		AddTexture(mRenderer, ID, fileName);
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -4,6 +4,7 @@
 #include "AbstractShipMovementController.h"
 #include "Animation.h"
 #include "AnimatedTexture.h"
+#include "TargetWaypoint.h"
 #include <memory>
 
 enum ShipRotation
@@ -13,17 +14,25 @@ enum ShipRotation
     counterclockwise
 };
 
+enum MoveReturnValues
+{
+    movedOK,
+    reachedWaypoint
+};
+
 class Ship
 {
 public:
     Ship(std::unique_ptr<AbstractShipMovementController> mShipMovementController);
     ~Ship();
     void AddToRenderQueue(int renderOrder);
-    void Move();
+    MoveReturnValues Move();
     void SetClockwiseRotation();
     void SetCounterclockwiseRotation();
+    void SetTargetWaypoint();
     void StopRotate();
     void Rotate();
+    
 
     void OnWKeyAction();
     void OnSKeyAction();
@@ -39,6 +48,7 @@ private:
 private:
     std::unique_ptr<AbstractShipMovementController> mShipMovementController;
     std::unique_ptr<AnimatedTexture> mAnimation;
+    std::shared_ptr<TargetWaypoint> mCurrentTargetWaypoint;
     Texture* mShipTexture = nullptr;
 
     //inline static const std::string mShipTextureName = "floss-move-with-sail-blue";

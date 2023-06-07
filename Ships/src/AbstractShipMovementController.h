@@ -32,6 +32,6 @@ protected:
 	double mShipRotation = 0.0;
 	SDL_Point mTextureCenter;
 
-	inline static const double ROTATION_SPEED = 0.4;
+	inline static const double ROTATION_SPEED = 2.4;
 };
 

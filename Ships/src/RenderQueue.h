@@ -16,8 +16,8 @@ public:
 
 	void Render();
 	int GetSpritesCount() const;
-	void AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, int renderOrder, Uint8 alpha = 255, bool drawRectFlag = false);
-	void AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, double angle, const SDL_Point& center, int renderOrder, Uint8 alpha = 255, bool drawRectFlag = false);
+	void AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, int renderOrder, bool drawRectFlag = false);
+	void AddToRenderQueue(Texture* texture, SDL_Rect srcRect, SDL_Rect dstRect, double angle, const SDL_Point& center, int renderOrder, bool drawRectFlag = false);
 private:
 	RenderQueue();
 };

@@ -8,6 +8,7 @@
 #include "NoAccelerationVelocityCalculator.h"
 #include "AbstractShipMovementController.h"
 #include "TargetWaypoint.h"
+#include "TargetWaypointsDisplay.h"
 
 #include <memory>
 
@@ -21,8 +22,10 @@ public:
     KeyboardHandler mKeyboardHandler;
     Map mTestMap;
 
-    std::vector<std::unique_ptr<TargetWaypoint>> mTargetWaypoints;
-    std::unique_ptr <Ship> mPlayerShip;
+    std::vector<std::shared_ptr<TargetWaypoint>> mTargetWaypoints;
+    TargetWaypointsDisplay mTargetWaypointsDisplay;
+//    std::shared_ptr <Ship> mPlayerShip;
+    Ship* mPlayerShip;
     std::unique_ptr <Ship> mAIShip;
 
     SailsController mTestSail;

@@ -261,8 +261,8 @@ void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int norm
 	SDL_Rect destination = { screenX, screenY, widthOnScreen, heightOnScreen };
 
 
-
-	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder, 255, true);
+	static const bool DEBUG_RECT = false;
+	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder,  DEBUG_RECT);
 }
 
 

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Texture.h"
-#include "AbstractShipMovementController.h"
+#include "ShipWithEngineMovementController.h"
 #include "Animation.h"
 #include "AnimatedTexture.h"
-#include "TargetWaypoint.h"
+//#include "TargetWaypoint.h"
 #include <memory>
 
 enum ShipRotation
@@ -14,24 +14,21 @@ enum ShipRotation
     counterclockwise
 };
 
-enum MoveReturnValues
-{
-    movedOK,
-    reachedWaypoint
-};
-
 class Ship
 {
 public:
-    Ship(std::unique_ptr<AbstractShipMovementController> mShipMovementController);
+    //Ship(std::unique_ptr<ShipWithEngineMovementController> mPlayerMovementController);
+    Ship(ShipWithEngineMovementController* mPlayerMovementController);
     ~Ship();
-    void AddToRenderQueue(int renderOrder);
-    MoveReturnValues Move();
+    void AddToRenderQueue(int renderOrder, SDL_Color c = {0, 0 ,0});
+    int Move();
     void SetClockwiseRotation();
     void SetCounterclockwiseRotation();
     void SetTargetWaypoint();
     void StopRotate();
     void Rotate();
+    double* GetX();
+    double* GetY();
     
 
     void OnWKeyAction();
@@ -48,9 +45,10 @@ private:
 
 
 private:
-    std::unique_ptr<AbstractShipMovementController> mShipMovementController;
+    //std::unique_ptr<ShipWithEngineMovementController> mPlayerMovementController;
+    ShipWithEngineMovementController* mPlayerMovementController;
     std::unique_ptr<AnimatedTexture> mAnimation;
-    std::shared_ptr<TargetWaypoint> mCurrentTargetWaypoint;
+    //std::shared_ptr<TargetWaypoint> mCurrentTargetWaypoint;
     Texture* mShipTexture = nullptr;
 
     //inline static const std::string mShipTextureName = "floss-move-with-sail-blue";

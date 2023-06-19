@@ -21,15 +21,15 @@ void TargetWaypointsDisplay::SetTargetWaypoints(std::shared_ptr<TargetWaypoint> 
 	//mCurrentTarget->SetTextureAlpha(NEXT_TARGET_ALPHA);
 }
 
-void TargetWaypointsDisplay::AddToRenderQueue(int renderOrder)
+void TargetWaypointsDisplay::AddToRenderQueue(int renderOrder, bool drawRectFlag /*= false*/, SDL_Color c)
 {
 	if (mCurrentTarget)
 	{
-		mCurrentTarget->AddToRenderQueue(renderOrder);
+		mCurrentTarget->AddToRenderQueue(renderOrder, drawRectFlag, c);
 	}
 
 	if (mNextTarget)
 	{
-		mNextTarget->AddToRenderQueue(renderOrder);
+		mNextTarget->AddToRenderQueue(renderOrder, drawRectFlag, c);
 	}
 }

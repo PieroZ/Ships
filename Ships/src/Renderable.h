@@ -9,7 +9,7 @@ public:
 	virtual ~Renderable() = default;
 	
 	void SetTexture(Texture* texture);
-	virtual void AddToRenderQueue(int renderOrder);
+	virtual void AddToRenderQueue(int renderOrder, bool drawRectFlag = false, SDL_Color c = { 0,0,0 });
 
 protected:
 	int mX;

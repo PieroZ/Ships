@@ -4,9 +4,9 @@
 #include "KeyboardHandler.h"
 #include "Map.h"
 #include "Ship.h"
-#include "SailsController.h"
+#include "ShipWithEngineMovementController.h"
 #include "NoAccelerationVelocityCalculator.h"
-#include "AbstractShipMovementController.h"
+#include "ShipMovementInterface.h"
 #include "TargetWaypoint.h"
 #include "TargetWaypointsDisplay.h"
 
@@ -23,16 +23,17 @@ public:
     Map mTestMap;
 
     std::vector<std::shared_ptr<TargetWaypoint>> mTargetWaypoints;
+    //TargetWaypointsDisplay mAITargetWaypointsDisplay;
     TargetWaypointsDisplay mTargetWaypointsDisplay;
 //    std::shared_ptr <Ship> mPlayerShip;
     Ship* mPlayerShip;
     Ship* mAIShip;
 
-    SailsController mTestSail;
+    //std::unique_ptr<ShipWithEngineMovementController> mPlayerMovementController;
+    //std::unique_ptr<ShipWithEngineMovementController> mAIShipMovementController;
 
-    std::unique_ptr<AbstractShipMovementController> mShipMovementController;
-
-    std::unique_ptr<AbstractShipMovementController> mAIShipMovementController;
+    ShipWithEngineMovementController* mPlayerMovementController;
+    ShipWithEngineMovementController* mAIShipMovementController;
 
     std::unique_ptr <NoAccelerationVelocityCalculator> mVelCalc;
 
@@ -63,5 +64,6 @@ public:
     void OnLoop();
 
     void OnRender();
+    void DebugTextRender();
     static AppStateTest* GetInstance();
 };

@@ -26,12 +26,14 @@ double ShipWithSailsMovementController::GetSailsVelocityModifier(SailLevel level
 	}
 }
 
-void ShipWithSailsMovementController::Move()
+int ShipWithSailsMovementController::Move(double& deltaX, double& deltaY)
 {
 	CalculateSpeed();
 
 	mX += mVelocityX;
 	mY += mVelocityY;
+	
+	return 0;
 }
 
 void ShipWithSailsMovementController::CalculateSpeed()

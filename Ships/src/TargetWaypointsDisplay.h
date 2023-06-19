@@ -17,5 +17,5 @@ private:
 	static const Uint8 NEXT_TARGET_ALPHA = 127;
 
 public:
-	virtual void AddToRenderQueue(int renderOrder) override;
+	virtual void AddToRenderQueue(int renderOrder, bool drawRectFlag = false, SDL_Color c = {0,0,0}) override;
 };

@@ -18,7 +18,7 @@ void Renderable::SetTexture(Texture* texture)
     mTexture = texture;
 }
 
-void Renderable::AddToRenderQueue(int renderOrder)
+void Renderable::AddToRenderQueue(int renderOrder, bool drawRectFlag/* = false*/, SDL_Color c /*= { 0,0,0 }*/)
 {
     if (!mTexture)
     {
@@ -28,5 +28,5 @@ void Renderable::AddToRenderQueue(int renderOrder)
     SDL_Rect dstRect = { mX, mY, mTexture->GetWidth(), mTexture->GetHeight() };
 
     SDL_Rect srcRect = mTexture->GetEntireTextureRect();
-    RenderQueue::GetInstance().AddToRenderQueue(mTexture, srcRect, dstRect, renderOrder);
+    RenderQueue::GetInstance().AddToRenderQueue(mTexture, srcRect, dstRect, renderOrder, drawRectFlag, c);
 }

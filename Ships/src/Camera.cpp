@@ -5,20 +5,20 @@ Camera Camera::CameraControl;
 
 Camera::Camera()
 {
-    X = Y = 0;
+    mX = mY = 0;
 
     TargetX = TargetY = NULL;
 
     TargetMode = TARGET_MODE_NORMAL;
 }
 
-void Camera::OnMove(int MoveX, int MoveY)
+void Camera::OnMove(double deltaX, double deltaY)
 {
-    X += MoveX;
-    Y += MoveY;
+    mX += deltaX;
+    mY += deltaY;
 }
 
-int Camera::GetX()
+double Camera::GetX()
 {
     if (TargetX != NULL)
     {
@@ -30,10 +30,10 @@ int Camera::GetX()
         return *TargetX;
     }
 
-    return X;
+    return mX;
 }
 
-int Camera::GetY()
+double Camera::GetY()
 {
     if (TargetY != NULL)
     {
@@ -45,17 +45,45 @@ int Camera::GetY()
         return *TargetY;
     }
 
-    return Y;
+    return mY;
 }
 
-void Camera::SetPos(int X, int Y)
+int Camera::GetCameraHeight() const
 {
-    this->X = X;
-    this->Y = Y;
+    return mCameraHeight;
 }
 
-void Camera::SetTarget(int* X, int* Y)
+int Camera::GetCameraWidth() const
 {
-    TargetX = X;
-    TargetY = Y;
+    return mCameraWidth;
+}
+
+const SDL_Rect& Camera::GetCameraRect()
+{
+    return {static_cast<int>(mX), static_cast<int>(mY), mCameraWidth, mCameraHeight };
+}
+
+void Camera::SetCameraWidth(int width)
+{
+    mCameraWidth = width;
+}
+
+void Camera::SetCameraHeight(int height)
+{
+    mCameraHeight = height;
+}
+
+void Camera::SetPos(double x, double y)
+{
+    this->mX = x;
+    this->mY = y;
+}
+
+void Camera::SetTarget(double* x, double* y)
+{
+    TargetX = x;
+    TargetY = y;
+
+    mX = static_cast<int>(*TargetX) - mCameraWidth / 2;
+    mY = static_cast<int>(*TargetY) - mCameraHeight / 2;
 }

@@ -7,7 +7,7 @@ TargetWaypointBrowser& TargetWaypointBrowser::GetInstance()
 	return instance;
 }
 
-void TargetWaypointBrowser::SetNextTargetWaypoint(Ship* ship)
+void TargetWaypointBrowser::SetNextTargetWaypoint(ShipMovementInterface* ship)
 {
 	if (mLevelTargetWaypoints.size() <= 0)
 	{
@@ -33,12 +33,20 @@ void TargetWaypointBrowser::SetNextTargetWaypoint(Ship* ship)
 
 			mCurrentWaypointTargetMap[ship] = nextTargetWaypoint;
 		}
+		//Increase reached waypoints counter
+		mReachedWaypointsCounter[ship]++;
 	}
 	// If it's not already in the map set the target to first waypoint
 	else
 	{
 		mCurrentWaypointTargetMap[ship] = mLevelTargetWaypoints[0];
+		mReachedWaypointsCounter[ship] = 0;
 	}
+}
+
+Uint16 TargetWaypointBrowser::GetReachedWaypointsCounter(ShipMovementInterface* ship) const
+{
+	return mReachedWaypointsCounter.at(ship);
 }
 
 void TargetWaypointBrowser::SetLevelTargetWaypoints(std::vector<std::shared_ptr<TargetWaypoint>>& waypoints)
@@ -46,12 +54,12 @@ void TargetWaypointBrowser::SetLevelTargetWaypoints(std::vector<std::shared_ptr<
 	mLevelTargetWaypoints = waypoints;
 }
 
-std::shared_ptr<TargetWaypoint> TargetWaypointBrowser::GetCurrentTargetWaypoint(Ship* ship) const
+std::shared_ptr<TargetWaypoint> TargetWaypointBrowser::GetCurrentTargetWaypoint(ShipMovementInterface* ship) const
 {
 	return mCurrentWaypointTargetMap.at(ship);
 }
 
-std::shared_ptr<TargetWaypoint> TargetWaypointBrowser::GetNextTargetWaypoint(Ship* ship) const
+std::shared_ptr<TargetWaypoint> TargetWaypointBrowser::GetNextTargetWaypoint(ShipMovementInterface* ship) const
 {
 	std::shared_ptr<TargetWaypoint> nextTargetWaypoint;
 	auto currentTarget = GetCurrentTargetWaypoint(ship);

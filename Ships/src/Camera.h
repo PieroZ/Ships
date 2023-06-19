@@ -14,11 +14,13 @@ public:
     static Camera CameraControl;
 
 private:
-    int X;
-    int Y;
+    double mX;
+    double mY;
+    int mCameraWidth;
+    int mCameraHeight;
 
-    int* TargetX;
-    int* TargetY;
+    double* TargetX;
+    double* TargetY;
 
 public:
     int TargetMode;
@@ -27,14 +29,20 @@ public:
     Camera();
 
 public:
-    void OnMove(int MoveX, int MoveY);
+    void OnMove(double MoveX, double MoveY);
 
 public:
-    int GetX();
-    int GetY();
+    double GetX();
+    double GetY();
+    int GetCameraHeight() const;
+    int GetCameraWidth() const;
+    const SDL_Rect& GetCameraRect();
+
+    void SetCameraWidth(int width);
+    void SetCameraHeight(int height);
 
 public:
-    void SetPos(int X, int Y);
+    void SetPos(double x, double y);
 
-    void SetTarget(int* X, int* Y);
+    void SetTarget(double* x, double* y);
 };

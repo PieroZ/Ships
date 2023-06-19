@@ -1,16 +1,19 @@
 #pragma once
 
-#include "AbstractShipMovementController.h"
+#include "ShipMovementInterface.h"
 #include "VelocityCalculator.h"
+#include "TargetWaypoint.h"
 
 #include <memory>
 
-class ShipWithEngineMovementController : public AbstractShipMovementController
+class ShipWithEngineMovementController : public ShipMovementInterface
 {
-private:
+protected:
 	std::unique_ptr<VelocityCalculator> mVelocityCalculator;
-	double mEngineSpeed = 1.0;
+	std::shared_ptr<TargetWaypoint> mCurrentTargetWaypoint;
+	double mEngineSpeed = 5.0;
 	inline static const double ENGINE_ACC = 0.1;
+
 public:
 
 	ShipWithEngineMovementController(std::unique_ptr<VelocityCalculator> velocityCalculator);
@@ -20,10 +23,11 @@ public:
 	void ModifyEngineSpeed(double deltaSpeed);
 
 
-	// Inherited via AbstractShipMovementController
+	// Inherited via ShipMovementInterface
 	virtual void OnWKeyAction() override;
 	virtual void OnSKeyAction() override;
-	virtual void Move() override;
+	virtual int Move(double & deltaX, double & deltaY) override;
+	void SetTargetWaypoint();
 private:
 	virtual void CalculateSpeed() override;
 };

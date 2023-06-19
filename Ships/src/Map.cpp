@@ -87,13 +87,13 @@ int Map::GetIdFromCoordinates(int x, int y)
 
 void Map::OnRender(int x, int y)
 {
-    for (int Y = 0; Y < mTilesPerColumn; Y++)
+    for (int mY = 0; mY < mTilesPerColumn; mY++)
     {
-        for (int X = 0; X < mTilesPerRow; X++)
+        for (int mX = 0; mX < mTilesPerRow; mX++)
         {
-            int vectorId = X + Y * mTilesPerColumn;
-            int screenX = X * TILE_SIZE;
-            int screenY = Y * TILE_SIZE;
+            int vectorId = mX + mY * mTilesPerColumn;
+            int screenX = mX * TILE_SIZE;
+            int screenY = mY * TILE_SIZE;
 
             int spriteX = mTiles[vectorId].mSpriteId * TILE_SIZE;
             TextureBank::Get(mSpritesheet)->RenderScaled(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, 0, TILE_SIZE, TILE_SIZE);
@@ -103,13 +103,13 @@ void Map::OnRender(int x, int y)
 
 void Map::AddToRenderQueue(int x, int y)
 {
-    for (int Y = 0; Y < mTilesPerColumn; Y++)
+    for (int mY = 0; mY < mTilesPerColumn; mY++)
     {
-        for (int X = 0; X < mTilesPerRow; X++)
+        for (int mX = 0; mX < mTilesPerRow; mX++)
         {
-            int vectorId = X + Y * mTilesPerRow;
-            int screenX = X * TILE_SIZE;
-            int screenY = Y * TILE_SIZE;
+            int vectorId = mX + mY * mTilesPerRow;
+            int screenX = mX * TILE_SIZE;
+            int screenY = mY * TILE_SIZE;
 
             int spritesPerRowInSpritesheet = TextureBank::Get(mSpritesheet)->GetWidth() / TILE_SIZE;
             int spriteX = (mTiles[vectorId].mSpriteId % spritesPerRowInSpritesheet) * TILE_SIZE;

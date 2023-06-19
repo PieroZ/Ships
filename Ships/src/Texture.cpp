@@ -155,29 +155,29 @@ bool Texture::LoadText(TTF_Font* font, const std::string& textureText, const SDL
 }
 
 //------------------------------------------------------------------------------
-void Texture::Render(int X, int Y)
+void Texture::Render(int mX, int mY)
 {
-	Render(X, Y, mWidth, mHeight);
+	Render(mX, mY, mWidth, mHeight);
 }
 
 //------------------------------------------------------------------------------
-void Texture::Render(int X, int Y, int mWidth, int mHeight)
+void Texture::Render(int mX, int mY, int mWidth, int mHeight)
 {
-	SDL_Rect Destination = { X, Y, mWidth, mHeight };
+	SDL_Rect Destination = { mX, mY, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, mSDLTexture, NULL, &Destination);
 }
 
 //------------------------------------------------------------------------------
-void Texture::Render(int X, int Y, int mWidth, int mHeight, int SX, int SY, int SWidth, int SHeight)
+void Texture::Render(int mX, int mY, int mWidth, int mHeight, int SX, int SY, int SWidth, int SHeight)
 {
 	SDL_Rect Source = { SX, SY, SWidth, SHeight };
-	SDL_Rect Destination = { X, Y, mWidth, mHeight };
+	SDL_Rect Destination = { mX, mY, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, mSDLTexture, &Source, &Destination);
 }
 
-void Texture::Render(int X, int Y, SDL_Color color)
+void Texture::Render(int mX, int mY, SDL_Color color)
 {
 	// Set the color modulation
 	SDL_SetTextureColorMod(mSDLTexture, color.r, color.g, color.b);
@@ -185,7 +185,7 @@ void Texture::Render(int X, int Y, SDL_Color color)
 	// Set the blend mode to preserve alpha channel
 	SDL_SetTextureBlendMode(mSDLTexture, SDL_BLENDMODE_BLEND);
 
-	SDL_Rect Destination = { X, Y, mWidth, mHeight };
+	SDL_Rect Destination = { mX, mY, mWidth, mHeight };
 
 	SDL_RenderCopy(mRenderer, mSDLTexture, NULL, &Destination);
 }
@@ -246,7 +246,7 @@ void Texture::RenderScaled(int x, int y, int normalResolutionWidth, int normalRe
 	SDL_RenderCopy(mRenderer, mSDLTexture, &Source, &Destination);
 }
 
-void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight, int renderOrder)
+void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int normalResolutionHeight, int spriteX, int spriteY, int spriteWidth, int spriteHeight, int renderOrder, bool absolutePos/* = false*/)
 {
 	double widthScale = static_cast<double>(App::GetInstance()->GetWindowWidth()) / static_cast<double>(App::GetInstance()->GetWindowTargetWidth());
 	double heightScale = static_cast<double>(App::GetInstance()->GetWindowHeight()) / static_cast<double>(App::GetInstance()->GetWindowTargetHeight());
@@ -262,7 +262,7 @@ void Texture::AddToRenderQueue(int x, int y, int normalResolutionWidth, int norm
 
 
 	static const bool DEBUG_RECT = false;
-	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder,  DEBUG_RECT);
+	RenderQueue::GetInstance().AddToRenderQueue(this, source, destination, renderOrder, DEBUG_RECT, { 0,0,0 }, absolutePos);
 }
 
 

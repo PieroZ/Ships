@@ -1,9 +1,9 @@
 #pragma once
-#include "AbstractShipMovementController.h"
+#include "ShipMovementInterface.h"
 #include "SailsController.h"
 #include "VelocityCalculator.h"
 
-class ShipWithSailsMovementController : public AbstractShipMovementController
+class ShipWithSailsMovementController : public ShipMovementInterface
 {
 private:
 	SailsController* mSailsController;
@@ -16,10 +16,10 @@ public:
 	double GetSailsVelocityModifier(SailLevel level);
 
 
-	// Inherited via AbstractShipMovementController
+	// Inherited via ShipMovementInterface
 	virtual void OnWKeyAction() override;
 	virtual void OnSKeyAction() override;
-	virtual void Move() override;
+	virtual int Move(double& deltaX, double& deltaY) override;
 	/*virtual void RotateShipClockwise() override;
 	virtual void RotateShipCounterclockwise() override;*/
 private:

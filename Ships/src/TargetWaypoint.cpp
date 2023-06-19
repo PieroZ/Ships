@@ -37,7 +37,7 @@ SDL_Point TargetWaypoint::GetCollisionCenter() const
 	return { a.x + a.w / 2, a.y + a.h / 2 };
 }
 
-void TargetWaypoint::AddToRenderQueue(int renderOrder)
+void TargetWaypoint::AddToRenderQueue(int renderOrder, bool drawRectFlag, SDL_Color c)
 {
-	Renderable::AddToRenderQueue(renderOrder);
+	Renderable::AddToRenderQueue(renderOrder, drawRectFlag, c);
 }

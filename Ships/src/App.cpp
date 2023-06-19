@@ -64,11 +64,13 @@ bool App::Init()
 	LoadWindowSizeFromConfig();
 
 	const char windowName[] = "RaceShips";
+	Uint32 flags = (SDL_WINDOW_SHOWN);
+	//Uint32 flags = (SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
 
 	if ((mWindow = SDL_CreateWindow(
 		windowName,
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		mWindowWidth, mWindowHeight, (SDL_WINDOW_SHOWN))
+		mWindowWidth, mWindowHeight, flags)
 		//mWindowWidth, mWindowHeight, (SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE))
 		) == NULL)
 	{
@@ -83,6 +85,9 @@ bool App::Init()
 		LOG_ERROR("Unable to create renderer");
 		return false;
 	}
+
+	// TEST
+	SDL_RenderSetVSync(mRenderer, 1);
 
 	SDL_SetRenderDrawColor(mRenderer, 0x00, 0x00, 0x00, 0xFF);
 

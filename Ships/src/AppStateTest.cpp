@@ -154,6 +154,11 @@ void AppStateTest::OnActivate(SDL_Renderer* Renderer)
 	Camera::CameraControl.SetCameraWidth(1920);
 	Camera::CameraControl.SetCameraHeight(1080);
 	Camera::CameraControl.SetTarget(mPlayerShip->GetX(), mPlayerShip->GetY());
+
+
+	int w, h = 0;
+	mTestMap.GetLevelSize(w, h);
+	Camera::CameraControl.SetLevelLimits(w,h);
 	
 
 
@@ -228,13 +233,17 @@ void AppStateTest::OnRender()
 	Texture shipDataScreenText;
 	Texture waypointsProgress;
 	Texture AIwaypointsProgress;
+
 	auto& fps = FPS::GetInstance();
-	//std::string spritesCount = std::to_string(RenderQueue::GetInstance().GetSpritesCount());
-	std::string spritesCount = fps.GetFpsString();
-	screenText.LoadText(Fonts::GetInstance().GetFont(), spritesCount, SDL_Color{ 255, 255, 255 });
-	screenText.AddToRenderQueue(0, 20, screenText.GetWidth(), screenText.GetHeight(), 0, 0, screenText.GetWidth(), screenText.GetHeight(), 100, true);
+
 
 	const std::string& shipControllerData = mPlayerShip->ToText();
+	//std::string spritesCount = std::to_string(RenderQueue::GetInstance().GetSpritesCount());
+	std::string spritesCount = fps.GetFpsString();
+	//screenText.LoadText(Fonts::GetInstance().GetFont(), spritesCount, SDL_Color{ 255, 255, 255 });
+	screenText.LoadText(Fonts::GetInstance().GetFont(), shipControllerData, SDL_Color{ 255, 255, 255 });
+	screenText.AddToRenderQueue(0, 20, screenText.GetWidth(), screenText.GetHeight(), 0, 0, screenText.GetWidth(), screenText.GetHeight(), 100, true);
+
 	std::string cameraX = "camera X: " + std::to_string(Camera::CameraControl.GetCameraRect().x);
 	std::string cameraY = "camera Y: " + std::to_string(Camera::CameraControl.GetCameraRect().y);
 

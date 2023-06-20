@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "App.h"
+#include <algorithm>
 
 Camera Camera::CameraControl;
 
@@ -16,6 +17,18 @@ void Camera::OnMove(double deltaX, double deltaY)
 {
     mX += deltaX;
     mY += deltaY;
+
+    mX = std::max(*TargetX - mCameraWidth / 2, 0.0);
+    if (mX)
+    {
+        mX = std::min(*TargetX - mCameraWidth / 2, static_cast<double>(mLevelWidth - mCameraWidth));
+    }
+
+    mY = std::max(*TargetY - mCameraHeight / 2, 0.0);
+    if (mY)
+    {
+        mY = std::min(*TargetY - mCameraHeight / 2, static_cast<double>(mLevelHeight - mCameraHeight));
+    }
 }
 
 double Camera::GetX()
@@ -77,6 +90,12 @@ void Camera::SetPos(double x, double y)
 {
     this->mX = x;
     this->mY = y;
+}
+
+void Camera::SetLevelLimits(int levelWidth, int levelHeight)
+{
+    mLevelWidth = levelWidth;
+    mLevelHeight = levelHeight;
 }
 
 void Camera::SetTarget(double* x, double* y)

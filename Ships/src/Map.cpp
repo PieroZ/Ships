@@ -7,6 +7,12 @@
 
 
 
+void Map::SetLevelSize()
+{
+    mMapWidth = mTilesPerRow * TILE_SIZE;
+    mMapHeight = mTilesPerColumn * TILE_SIZE;
+}
+
 Map::Map()
 {
 }
@@ -66,6 +72,9 @@ bool Map::OnLoad(const std::string& filename, const std::string& spritesheet)
 
     // Set the number of tiles per column
     mTilesPerColumn = row;
+
+    SetLevelSize();
+
     return true;
 }
 
@@ -118,4 +127,10 @@ void Map::AddToRenderQueue(int x, int y)
             TextureBank::Get(mSpritesheet)->AddToRenderQueue(screenX, screenY, TILE_SIZE, TILE_SIZE, spriteX, spriteY, TILE_SIZE, TILE_SIZE, 0);
         }
     }
+}
+
+void Map::GetLevelSize(int& w, int& h)
+{
+    w = mMapWidth;
+    h = mMapHeight;
 }

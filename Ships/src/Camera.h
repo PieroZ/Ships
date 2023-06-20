@@ -19,6 +19,9 @@ private:
     int mCameraWidth;
     int mCameraHeight;
 
+    int mLevelWidth = 0;
+    int mLevelHeight = 0;
+
     double* TargetX;
     double* TargetY;
 
@@ -43,6 +46,7 @@ public:
 
 public:
     void SetPos(double x, double y);
+    void SetLevelLimits(int x, int y);
 
     void SetTarget(double* x, double* y);
 };

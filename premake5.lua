@@ -26,7 +26,24 @@ project "Ships"
 
 	includedirs
 	{
-		"vendor/spdlog/include"
+		"vendor/spdlog/include",
+		"C:/dev/libs/cpp/SDL/SDL2/SDL2-2.28.5/include",
+		"C:/dev/libs/cpp/SDL/SDL2-image/SDL2_image-2.8.2/include",
+		"C:/dev/libs/cpp/SDL/SDL2-ttf/SDL2_ttf-2.20.2/include"
+	}
+	
+	libdirs
+	{
+		"C:/dev/libs/cpp/SDL/SDL2/SDL2-2.28.5/lib/x64",
+		"C:/dev/libs/cpp/SDL/SDL2-image/SDL2_image-2.8.2/lib/x64",
+		"C:/dev/libs/cpp/SDL/SDL2-ttf/SDL2_ttf-2.20.2/lib/x64"
+	}
+	
+	links 
+	{
+		"SDL2",
+		"SDL2main",
+		"SDL2_image"
 	}
 
 	filter "system:windows"
